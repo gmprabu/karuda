@@ -1,0 +1,17 @@
+<mat-sidenav-container [class.myapp-dark-theme]="darkTheme">
+    <mat-sidenav #sidenav mode="over">
+        <elb-sidebar (NavClick)="sidenav.toggle()"></elb-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="side">
+        <header>
+            <elb-header (toggle)="sidenav.toggle()" (navTitle)="navTitle"></elb-header>
+        </header>
+        <main class="main-class">
+           <!--  <div id="overlayDiv" *ngIf="api.overlay" class="container-fluid"></div> -->
+            <router-outlet></router-outlet>
+        </main>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+  

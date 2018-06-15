@@ -1,0 +1,104 @@
+<mat-card class="user-card">
+  <i class="material-icons" id="close" (click)="onNavClick()">close</i>
+  <mat-card-content class="align-center">
+      <i class="material-icons account-icon">account_circle</i>
+      <h2 class="md-title margin-bottom-0">John Smith</h2>
+      <h4 class="md-title margin-top-0">Maintenance</h4>
+  </mat-card-content>
+</mat-card>
+<mat-nav-list>
+  <mat-list-item id="dashboard" [routerLink]="['./dashboard']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">dashboard</i>
+    <span matLine>Dashboard</span>
+  </mat-list-item>
+  <mat-list-item id="sector_management" [routerLink]="['./tasklists']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">airplanemode_active</i>
+    <span matLine>Sector management</span>
+  </mat-list-item>
+  <mat-list-item id="description" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">description</i>
+    <span matLine>Notice to Crew</span>
+  </mat-list-item>
+  <mat-list-item id="exception_management" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">call_split</i>
+    <span matLine>Exception Management</span>
+  </mat-list-item>
+
+  <hr>
+  <h3 mat-subheader>Reference</h3>
+  
+  <mat-list-item id="etops_sectors" [routerLink]="['./etops']" (click)="onNavClick()">
+      <i mat-list-icon class="material-icons">fiber_manual_record</i>
+      <span matLine>ETOPS sectors</span>
+  </mat-list-item>
+
+    <!--<hr>
+ <h3 mat-subheader>Configurations</h3>
+  
+  <mat-list-item id="daily_check_expiry" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">done_all</i>
+    <span matLine>Daily check expiry</span>
+  </mat-list-item>
+  <mat-list-item id="open_mel" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">build</i>
+    <span matLine>Open MEL/ CDL</span>
+  </mat-list-item>
+  <mat-list-item id="dd_expiry" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">timelapse</i>
+    <span matLine>DD Expiry</span>
+  </mat-list-item>
+  <mat-list-item id="fuel_alerts" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">warning</i>
+    <span matLine>Fuel Alerts</span>
+  </mat-list-item>
+  <mat-list-item id="oil_consumption" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">opacity</i>
+    <span matLine>Oil consumption</span>
+  </mat-list-item> -->
+
+  <hr>
+  <h3 mat-subheader>User management</h3>
+
+  <mat-list-item id="user_list" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">supervisor_account</i>
+    <span matLine>User list</span>
+  </mat-list-item>
+  <mat-list-item id="forgot_password" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">vpn_key</i>
+    <span matLine>Forgot password</span>
+  </mat-list-item>
+
+  <hr>
+  <h3 mat-subheader>Audits and Reports</h3>
+
+    <mat-list-item id="audit_trail_view" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">dns</i>
+    <span matLine>Audit trail view</span>
+  </mat-list-item>
+  <mat-list-item id="reports" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">description</i>
+    <span matLine>Reports</span>
+  </mat-list-item>
+  
+  <hr>
+
+  <mat-list-item id="settings" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">settings</i>
+    <span matLine>Settings</span>
+  </mat-list-item>
+  <mat-list-item id="send_feedback" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">feedback</i>
+    <span matLine>Send feedback</span>
+  </mat-list-item>
+
+  <hr>
+
+  <mat-list-item id="logout" [routerLink]="['./project']" (click)="onNavClick()">
+    <i mat-list-icon class="material-icons">power_settings_new</i>
+    <span matLine>Logout</span>
+  </mat-list-item>
+
+</mat-nav-list>
+<footer class="margin-top-20">
+  <elb-footer></elb-footer>
+</footer>

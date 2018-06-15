@@ -1,0 +1,9 @@
+.vert-divider{
+    border-left: 1px solid gray;
+    padding-top: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.tool-bar{
+    position: fixed;
+}

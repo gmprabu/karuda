@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~material-design-icons/iconfont/material-icons.css";
+
+
+
+html, body, app-root, mat-sidenav-container, .side {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+  }
+  
+  .side {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  main {
+    flex: 1;
+  }
+  
+  .fill-remaining-space {
+    flex: 1 1 auto;
+  }
+  
+  .full-fill {
+    width: 100%;
+  }
+  
+  .action-right {
+    text-align: right;
+    font-size: 13px;
+  }

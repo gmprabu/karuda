@@ -21,7 +21,7 @@ import {
   MatSelectModule,
   MatSidenavModule,
   MatExpansionModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 

@@ -1,0 +1,9 @@
+<div class="model-width">
+    <p>{{ title }}</p>
+    <hr>
+    <p>{{ message }}</p>
+    <div class="action-right">
+        <button type="button" mat-raised-button (click)="dialogRef.close(false)">Cancel</button>
+        <button type="button" class="delete-button" mat-raised-button color="primary" (click)="dialogRef.close(true)">Delete</button>
+    </div>
+</div>

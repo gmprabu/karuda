@@ -1,4 +1,7 @@
 export class User{
-    private username:string;
-    private password:string;
+     id?:number;
+     username:string;
+     password?:string;
+     name:string;
+     email:string;
 }

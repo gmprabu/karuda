@@ -7,7 +7,7 @@
   </mat-card-content>
 </mat-card>
 <mat-nav-list>
-  <mat-list-item id="dashboard" [routerLink]="['./dashboard']" (click)="onNavClick()">
+  <mat-list-item id="dashboard" [routerLink]="['./home']" (click)="onNavClick()">
     <i mat-list-icon class="material-icons">dashboard</i>
     <span matLine>Dashboard</span>
   </mat-list-item>
@@ -59,7 +59,7 @@
   <hr>
   <h3 mat-subheader>User management</h3>
 
-  <mat-list-item id="user_list" [routerLink]="['./project']" (click)="onNavClick()">
+  <mat-list-item id="user_list" [routerLink]="['./users']" (click)="onNavClick()">
     <i mat-list-icon class="material-icons">supervisor_account</i>
     <span matLine>User list</span>
   </mat-list-item>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'elb-dashboard',
@@ -8,13 +8,8 @@ import { AuthService } from '../auth/auth.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor( private authService: AuthService) { }
-
-  ngOnInit() {
+  ngOnInit(): void {
+   // throw new Error("Method not implemented.");
   }
-
-  logout(){
-    alert('test');
-    this.authService.logout();
-  }
+  constructor( ) { }
 }

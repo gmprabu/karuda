@@ -22,6 +22,10 @@ import {
   MatSidenavModule,
   MatExpansionModule,
   MatButtonToggleModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -49,7 +53,11 @@ import { HttpClientModule } from '@angular/common/http';
     MatSelectModule,
     MatSidenavModule,
     MatExpansionModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     CommonModule,
@@ -74,7 +82,11 @@ import { HttpClientModule } from '@angular/common/http';
     MatSelectModule,
     MatSidenavModule,
     MatExpansionModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [
   ],

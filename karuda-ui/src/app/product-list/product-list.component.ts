@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -7,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
   items:Array<string>= ['','','','','','','','','','',''];
 
   ngOnInit() {
 
+  }
+  openAddProduct(){
+    this.router.navigateByUrl('/addProduct');
   }
 }

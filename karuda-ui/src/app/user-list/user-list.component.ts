@@ -4,19 +4,26 @@ import { MatTableDataSource, MatPaginator, MatDialog, MatDialogConfig } from '@a
 import { UserCreationComponent } from '../user-creation/user-creation.component';
 import { User } from '../model/user';
 import { DialogsService } from '../shared/dialogs.service';
+import { UserListService } from './user-list.service';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  styleUrls: ['./user-list.component.css'],
+  providers :[UserListService]
 })
 export class UserListComponent implements OnInit {
 
-  constructor(private authService: AuthService, public dialog: MatDialog, public dialogsService: DialogsService) { }
+  constructor(private authService: AuthService, 
+    private dialog: MatDialog, 
+    private dialogsService: DialogsService,
+    private userService:UserListService
+  ) { }
 
   displayedColumns = ['name', 'username', 'email', 'options'];
   dataSource = new MatTableDataSource<User>(ELEMENT_DATA);
   user = new User();
+  editFlag:boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
@@ -24,17 +31,14 @@ export class UserListComponent implements OnInit {
   }
 
   openDialog(user: User) {
-
-    console.log(user);
+    this.editFlag = false;
+    if(user){
+    this.editFlag = true;
+    }
     const dialogConfig = new MatDialogConfig();
-
-    // dialogConfig.disableClose = true;
-    // dialogConfig.autoFocus = true;
-    // dialogConfig.position = { top: '0%' };
     dialogConfig.data = user;
-
-
-    const dialogRef = this.dialog.open(UserCreationComponent, { width: '500px', height: '500px', data: dialogConfig });
+    const dialogRef = this.dialog.open(UserCreationComponent, 
+      { width: '500px', height: '500px', data: dialogConfig });
 
     dialogRef.afterClosed().subscribe(
       data => console.log("Dialog output:", data)

@@ -14,7 +14,7 @@ export class UserCreationComponent implements OnInit {
 
   form: FormGroup;
   description: string;
-
+  editFlag:boolean = false;
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<UserCreationComponent>,
@@ -37,7 +37,8 @@ export class UserCreationComponent implements OnInit {
   }
 
   public setValues() {
-    if (this.data.data) {
+    if (this.data.data) {   
+      this.editFlag = true;
       this.form.patchValue({
         name: this.data.data.name,
         email: this.data.data.email,

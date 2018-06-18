@@ -16,6 +16,9 @@ import { UserCreationComponent } from './user-creation/user-creation.component';
 import { DialogsService } from './shared/dialogs.service';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductComponent } from './product/product.component';
+import { ProductFormComponent } from './product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { UserListComponent } from './user-list/user-list.component';
     LoginComponent,
     UserCreationComponent,
     ConfirmDialogComponent,
-    UserListComponent
+    UserListComponent,
+    ProductListComponent,
+    ProductComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,

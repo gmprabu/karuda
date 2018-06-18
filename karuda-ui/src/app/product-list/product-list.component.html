@@ -1,0 +1,14 @@
+<div class="products">
+
+  
+<div fxLayout="row" fxLayoutAlign="space-around center" class="margin-bottom20">
+    <div fxFlex></div>
+    <div fxLayout="row"  fxLayoutAlign="right" class="add-product">
+        <span fxFlex>
+            <button mat-raised-button color="primary" (click)="openDialog()">Add product</button>
+        </span>
+    </div>
+</div>
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="2%">
+  <app-product *ngFor="let i of items"  class="card-item" fxFlex="30%;" fxFlex.xs="80%"></app-product>  
+</div>

@@ -23,13 +23,13 @@
         Email is no valid
     </mat-error>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field *ngIf="!editFlag">
     <input type="password"  matInput placeholder="Password" formControlName="password">
     <mat-error *ngIf="form.get('password').hasError('required')">
         Password is required
     </mat-error>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field *ngIf="!editFlag">
     <input matInput  type="password" placeholder="Confirm Password" formControlName="confirmPassword">
     <mat-error *ngIf="form.get('confirmPassword').hasError('required')">
         Confirm Password is required

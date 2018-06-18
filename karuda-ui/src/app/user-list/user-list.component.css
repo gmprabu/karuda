@@ -6,17 +6,12 @@
 table {
     width: 100%;
   }
-  
-  .cursor
-  {
+.cursor {
      cursor: pointer;
   }
-  .delete{
+.delete {
       margin-left: 8%;
-  }
-  .mat-table {
+    }
+.mat-table {
       border: 2px solid #E6E6E5;
-  }
-  .margin-bottom20{
-      margin-bottom: 20px;
   }

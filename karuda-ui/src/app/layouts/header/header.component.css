@@ -6,4 +6,5 @@
 }
 .tool-bar{
     position: fixed;
+    z-index: 999999999999999;
 }

@@ -1,0 +1,17 @@
+.products{
+    margin-top: 8%;
+}
+
+::ng-deep .mat-grid-tile{
+    box-sizing: border-box;
+    border: 2px solid #E6E6E5;
+}
+.card-item{
+    box-sizing: border-box;
+    margin-left: 1%;
+    margin-bottom: 1%;
+    border: 1px solid #E6E6E5;
+}
+.add-product{
+    margin-right: 3%;
+}

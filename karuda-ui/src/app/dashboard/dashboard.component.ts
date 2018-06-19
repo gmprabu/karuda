@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
 
 @Component({
@@ -11,5 +12,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
    // throw new Error("Method not implemented.");
   }
-  constructor( ) { }
+  constructor( private auth: AuthService ) { }
+  logout(){
+    this.auth.logout();
+  }
 }

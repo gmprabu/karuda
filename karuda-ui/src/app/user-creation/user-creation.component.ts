@@ -1,9 +1,7 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
-
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
-import * as moment from 'moment';
 import { User } from '../model/user';
+import { CommonService } from '../shared/common.service';
 
 @Component({
   selector: 'app-user-creation',
@@ -15,14 +13,14 @@ export class UserCreationComponent implements OnInit {
   form: FormGroup;
   description: string;
   editFlag:boolean = false;
-  constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<UserCreationComponent>,
+  constructor(private fb: FormBuilder, private commonService:CommonService) { }
+  user:User;
 
-    
-    @Inject(MAT_DIALOG_DATA)  public data: any
-  ) { }
-
+  roles = [
+    'User',
+    'Admin',
+    'Super Admin',
+  ];
      
 
   ngOnInit() {
@@ -31,30 +29,41 @@ export class UserCreationComponent implements OnInit {
       email: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      confirmPassword: ['', Validators.required],
+      role: ['', Validators.required]
     });
     this.setValues();
   }
 
   public setValues() {
-    if (this.data.data) {   
+    this.user =this.commonService.getUser();
+    if (this.user) {  
       this.editFlag = true;
+      this.form.get("password").clearValidators();
+      this.form.get("confirmPassword").clearValidators();
       this.form.patchValue({
-        name: this.data.data.name,
-        email: this.data.data.email,
-        username: this.data.data.username
+        name: this.user.name,
+        email: this.user.email,
+        username: this.user.username,
+       // role :this.user.role,
       });
     }
-
+  } 
+  reset(){
+    this.form.patchValue({
+      name: undefined,
+      email: undefined,
+      username: undefined,
+      password:undefined,
+      confirmPassword:undefined,
+      role:undefined
+    });
   }
-
-  save() {
-    this.dialogRef.close(this.form.value);
-  }
-
-  close() {
-    this.dialogRef.close();
-  }
+  onSubmit() {
+    if (this.form.valid) {
+    console.log(this.form.value);
+          
+    }}
 
 }
 

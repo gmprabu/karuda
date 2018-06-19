@@ -19,10 +19,12 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.NaturalId;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.karuda.domain.audit.UserAudit;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import com.karuda.domain.audit.UserAudit;
 
 
 
@@ -47,6 +49,7 @@ public class User extends UserAudit {
 
 	@NotBlank
 	@Size(max = 100)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 
 	@NaturalId

@@ -4,9 +4,9 @@ spring:
   profiles:
       active: local
       
-app:
+app: 
     jwtSecret: JWTSuperSecretKey
-    jwtExpirationInMs:  604800000
+    jwtExpirationInMs:  600000
 ---
 spring:
   profiles: local

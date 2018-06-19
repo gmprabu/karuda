@@ -6,3 +6,16 @@ textarea {
     height: 100px;
     resize: vertical;
 }
+
+
+.radio-button {
+    margin: 5px;
+  }
+  
+.selected-value {
+    margin: 15px 0;
+  }
+
+  .save{
+      margin-left: 2%;
+  }

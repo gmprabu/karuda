@@ -5,6 +5,8 @@ import { UserCreationComponent } from '../user-creation/user-creation.component'
 import { User } from '../model/user';
 import { DialogsService } from '../shared/dialogs.service';
 import { UserListService } from './user-list.service';
+import { Router } from '@angular/router';
+import { CommonService } from '../shared/common.service';
 
 @Component({
   selector: 'app-user-list',
@@ -17,32 +19,36 @@ export class UserListComponent implements OnInit {
   constructor(private authService: AuthService, 
     private dialog: MatDialog, 
     private dialogsService: DialogsService,
-    private userService:UserListService
+    private userService:UserListService,
+    private router:Router,
+    private commonService:CommonService
   ) { }
 
-  displayedColumns = ['name', 'username', 'email', 'options'];
-  dataSource = new MatTableDataSource<User>(ELEMENT_DATA);
+  displayedColumns = ['name', 'username', 'email','role', 'options'];
+  dataSource = new MatTableDataSource<User>();
   user = new User();
   editFlag:boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
+  
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
+    this. getAllUsers();
   }
 
-  openDialog(user: User) {
-    this.editFlag = false;
-    if(user){
-    this.editFlag = true;
-    }
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = user;
-    const dialogRef = this.dialog.open(UserCreationComponent, 
-      { width: '500px', height: '500px', data: dialogConfig });
+  getAllUsers() {
+    this.userService.getUsers().subscribe((data) => {
+      console.log(data[0].roles);
+      this.dataSource = new MatTableDataSource<User>(data);;
+    });
+  }
 
-    dialogRef.afterClosed().subscribe(
-      data => console.log("Dialog output:", data)
-    );
+  editUser(user: User) {
+    this.commonService.setUser(user);
+    this.router.navigateByUrl('/createUser');
+  }
+  createUser(){
+    this.commonService.setUser(null);
+    this.router.navigateByUrl('/createUser');
   }
 
   delete(item: User) {
@@ -61,13 +67,13 @@ export class UserListComponent implements OnInit {
 }
 
 
-const ELEMENT_DATA: User[] = [
-  { id: 1, username: 'prabu', name: 'Prabu', email: 'prabu@gmail.com' },
-  { id: 2, username: 'kavi', name: 'Kavi', email: 'kavi@gmail.com' },
-  { id: 3, username: 'saravanan', name: 'Saravanan', email: 'saravanan@gmail.com' },
-  { id: 4, username: 'dhansika', name: 'Dhansika', email: 'kutty@gmail.com' },
-  { id: 5, username: 'mala', name: 'Mala', email: 'mala@gmail.com' },
-  { id: 6, username: 'prakash', name: 'Prakash', email: 'prakash@gmail.com' },
-  { id: 7, username: 'thulasi', name: 'Thulasi', email: 'thulasi@gmail.com' },
-  { id: 8, username: 'muniyappan', name: 'Muniyappan', email: 'muniyappan@gmail.com' },
-];
+/* const ELEMENT_DATA: User[] = [
+  { id: 1, username: 'prabu', name: 'Prabu',role:'', email: 'prabu@gmail.com' },
+  { id: 2, username: 'kavi', name: 'Kavi',role:'', email: 'kavi@gmail.com' },
+  { id: 3, username: 'saravanan', name: 'Saravanan',role:'', email: 'saravanan@gmail.com' },
+  { id: 4, username: 'dhansika', name: 'Dhansika',role:'', email: 'kutty@gmail.com' },
+  { id: 5, username: 'mala', name: 'Mala',role:'', email: 'mala@gmail.com' },
+  { id: 6, username: 'prakash', name: 'Prakash',role:'', email: 'prakash@gmail.com' },
+  { id: 7, username: 'thulasi', name: 'Thulasi',role:'', email: 'thulasi@gmail.com' },
+  { id: 8, username: 'muniyappan', name: 'Muniyappan',role:'', email: 'muniyappan@gmail.com' },
+]; */

@@ -7,7 +7,7 @@
         </div>
         <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="right">
             <span fxFlex>
-                <button mat-raised-button color="primary" (click)="openDialog()">add</button>
+                <button mat-raised-button color="primary" (click)="createUser()">Add user</button>
             </span>
         </div>
     </div>
@@ -25,11 +25,19 @@
             <mat-header-cell *matHeaderCellDef> E-Mail </mat-header-cell>
             <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="role">
+            <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
+            <mat-cell *matCellDef="let user">
+                    <span  *ngFor="let role of user.roles; let i = index">
+                            {{role.name}}{{i === user.roles.length -1 ? '' : ', '}}
+                         </span>
+                </mat-cell>
+        </ng-container>
 
         <ng-container matColumnDef="options">
             <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
             <mat-cell *matCellDef="let user">
-                <mat-icon class="cursor " (click)="openDialog(user)">mode_edit</mat-icon>
+                <mat-icon class="cursor " (click)="editUser(user)">mode_edit</mat-icon>
                 <mat-icon class="cursor delete" (click)="delete(user)">delete</mat-icon>
             </mat-cell>
         </ng-container>

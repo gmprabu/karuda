@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Role {
+public class Role extends DateAudit {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

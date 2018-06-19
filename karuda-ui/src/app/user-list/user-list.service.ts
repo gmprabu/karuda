@@ -8,24 +8,23 @@ export class UserListService {
 
   constructor(private http: HttpClient) { }
 
-  getSectors(): Observable<User[]> {
-
+  getUsers(): Observable<User[]> {
     return this.http.get<User[]>('/api/users');
   }
 
-  addSector(etop: User): Observable<User> {
-    return this.http.post<User>('/api/users', etop).catch((err) => {
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>('/api/users', user).catch((err) => {
       console.log(err);
       return Observable.throw(err);
     });
   }
 
-  updateSector(etop: User): Observable<User> {
-    return this.http.put<User>('/api/users/' + etop.id, etop);
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>('/api/users/', user);
   }
 
-  removeSector(etop: User): Observable<any> {
-    return this.http.delete('/api/users/' + etop.id );
+  removeUser(user: User): Observable<any> {
+    return this.http.delete('/api/users/' + user.id );
   }
 
 }

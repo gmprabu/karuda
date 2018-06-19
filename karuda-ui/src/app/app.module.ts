@@ -19,6 +19,8 @@ import { UserListComponent } from './user-list/user-list.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductComponent } from './product/product.component';
 import { ProductFormComponent } from './product-form/product-form.component';
+import { CommonService } from './shared/common.service';
+import { AuthInterceptor } from './auth/auth.intercept';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,12 @@ import { ProductFormComponent } from './product-form/product-form.component';
     ReactiveFormsModule, 
     FlexLayoutModule
   ],
-  providers: [AuthGuard,RoleGuardService,AuthService,DialogsService],
+  providers: [AuthGuard,RoleGuardService,AuthService,DialogsService,CommonService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+  }],
   bootstrap: [AppComponent],
   entryComponents : [UserCreationComponent,ConfirmDialogComponent]
 })

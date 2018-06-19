@@ -52,7 +52,10 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role userRole = roleRepository.findByName(RoleName.USER)
+        if(signUpRequest.getRole() !=null && signUpRequest.getRole().contains("Super"))
+        	
+        	signUpRequest.setRole("SUPER_ADMIN");
+        Role userRole = roleRepository.findByName(RoleName.valueOf(signUpRequest.getRole().toUpperCase()))
                 .orElseThrow(() -> new KarudaException("User Role not set."));
 
         user.setRoles(Collections.singleton(userRole));

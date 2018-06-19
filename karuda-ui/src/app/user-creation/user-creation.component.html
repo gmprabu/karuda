@@ -1,5 +1,4 @@
 <div class="page-top-margin">
-  <h2 mat-dialog-title>Create User</h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div fxLayout="row">
 
@@ -45,6 +44,10 @@
             <mat-error *ngIf="form.get('confirmPassword').hasError('required')">
               Confirm Password is required
             </mat-error>
+            <mat-error *ngIf="form.get('confirmPassword').hasError('notEquivalent')">
+              Confirm Password is not matching with password
+            </mat-error>
+
           </mat-form-field>
         </div>
         <div fxFlex>
@@ -53,7 +56,7 @@
               {{role}}
             </mat-radio-button>
           </mat-radio-group>
-          <mat-error *ngIf="form.get('role').hasError('required')">
+          <mat-error *ngIf="!form.controls['role'].valid && form.controls['role'].touched">
              Role is required
           </mat-error>
         </div>

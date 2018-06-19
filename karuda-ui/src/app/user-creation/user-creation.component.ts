@@ -28,13 +28,27 @@ export class UserCreationComponent implements OnInit {
       name: ['', Validators.required],
       email: ['', Validators.required],
       username: ['', Validators.required],
+      role: ['', Validators.required],
       password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      role: ['', Validators.required]
-    });
+      confirmPassword: ['', Validators.required]
+    },{validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
     this.setValues();
   }
-
+  checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
+    return (group: FormGroup) => {
+      let passwordInput = group.controls[passwordKey],
+          passwordConfirmationInput = group.controls[passwordConfirmationKey];
+      if (passwordInput.value !== passwordConfirmationInput.value) {
+        return passwordConfirmationInput.setErrors({notEquivalent: true})
+      }
+      else if( passwordConfirmationInput.value == ''){
+        return passwordConfirmationInput.setErrors({required: true})
+      }
+      else{
+        return passwordConfirmationInput.setErrors(null);
+      }
+    }
+  }
   public setValues() {
     this.user =this.commonService.getUser();
     if (this.user) {  

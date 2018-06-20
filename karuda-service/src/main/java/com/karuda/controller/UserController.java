@@ -54,7 +54,7 @@ public class UserController {
 				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id) {
 		 service.delete(id);
 		 return ResponseEntity.ok(new ApiResponse(true, "User deleted successfully"));

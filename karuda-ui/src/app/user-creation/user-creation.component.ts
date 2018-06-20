@@ -2,18 +2,22 @@ import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { User } from '../model/user';
 import { CommonService } from '../shared/common.service';
+import { UserListService } from '../user-list/user-list.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-creation',
   templateUrl: './user-creation.component.html',
-  styleUrls: ['./user-creation.component.css']
+  styleUrls: ['./user-creation.component.css'],
+  providers :[UserListService]
 })
 export class UserCreationComponent implements OnInit {
 
   form: FormGroup;
   description: string;
   editFlag:boolean = false;
-  constructor(private fb: FormBuilder, private commonService:CommonService) { }
+  constructor(private fb: FormBuilder, private commonService:CommonService,
+    private userService:UserListService,  private router:Router) { }
   user:User;
 
   roles = [
@@ -74,10 +78,18 @@ export class UserCreationComponent implements OnInit {
     });
   }
   onSubmit() {
+    
     if (this.form.valid) {
-    console.log(this.form.value);
-          
+      if(this.editFlag){
+        this.userService.updateUser(this.form.value).subscribe(data => {
+          this.router.navigateByUrl('/users');
+        });  
+      }
+      else{
+        this.userService.addUser(this.form.value).subscribe(data => {
+          this.router.navigateByUrl('/users');
+        });  
+      }       
     }}
-
 }
 

@@ -37,14 +37,13 @@ export class UserListComponent implements OnInit {
 
   getAllUsers() {
     this.userService.getUsers().subscribe((data) => {
-      console.log(data[0].roles);
       this.dataSource = new MatTableDataSource<User>(data);;
     });
   }
 
   editUser(user: User) {
     this.commonService.setUser(user);
-    this.router.navigateByUrl('/createUser');
+    this.router.navigateByUrl('/editUser');
   }
   createUser(){
     this.commonService.setUser(null);
@@ -56,7 +55,9 @@ export class UserListComponent implements OnInit {
       .confirm('Confirm  delete', 'Are you sure to delete this user?')
       .subscribe((res) => {
         if (res) {
-
+          this.userService.removeUser(item).subscribe((data) => {
+            this.getAllUsers(); console.log('deleted successfully');
+          });
         }
       });
   }

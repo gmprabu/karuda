@@ -21,6 +21,7 @@ const routes: Routes = [
     { path: 'products', component: ProductListComponent,canActivate:[AuthGuard], data: {pageTitle: 'Product List'}},
     { path: 'addProduct', component: ProductFormComponent,canActivate:[AuthGuard], data: {pageTitle: 'Add Product'}},
     { path: 'createUser', component: UserCreationComponent, canActivate:[AuthGuard],data: {pageTitle: 'Create User'}},
+    { path: 'editUser', component: UserCreationComponent, canActivate:[AuthGuard],data: {pageTitle: 'Edit User'}},
     ...errorRoute
 ];
 

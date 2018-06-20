@@ -7,4 +7,5 @@ export class User{
      name:string;
      email:string;
      roles:Role[];
+     role:string;
 }

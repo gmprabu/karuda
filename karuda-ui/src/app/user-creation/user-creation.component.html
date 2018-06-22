@@ -52,8 +52,8 @@
         </div>
         <div fxFlex>
           <mat-radio-group class="radio-group" formControlName="role">
-            <mat-radio-button class="radio-button" *ngFor="let role of roles" [value]="role">
-              {{role}}
+            <mat-radio-button class="radio-button" *ngFor="let role of roles" [value]="role.key">
+              {{role.name}}
             </mat-radio-button>
           </mat-radio-group>
           <mat-error *ngIf="!form.controls['role'].valid && form.controls['role'].touched">

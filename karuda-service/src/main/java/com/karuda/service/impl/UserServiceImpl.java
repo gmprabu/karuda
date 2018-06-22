@@ -49,17 +49,10 @@ public class UserServiceImpl implements UserService {
         // Creating user's account
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
                 signUpRequest.getEmail(), signUpRequest.getPassword());
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        if(signUpRequest.getRole() !=null && signUpRequest.getRole().contains("Super"))
-        	
-        	signUpRequest.setRole("SUPER_ADMIN");
         Role userRole = roleRepository.findByName(RoleName.valueOf(signUpRequest.getRole().toUpperCase()))
                 .orElseThrow(() -> new KarudaException("User Role not set."));
-
-        user.setRoles(Collections.singleton(userRole));
-        
+        user.setRoles(Collections.singleton(userRole));  
         User result = userRepository.save(user);
         
         return result;
@@ -80,7 +73,11 @@ public class UserServiceImpl implements UserService {
 			existing.setEmail(signUpRequest.getEmail());
 			existing.setUsername(signUpRequest.getUsername());
 			existing.setName(signUpRequest.getName());
-			return userRepository.save(existing);
+		 //   Role userRole = roleRepository.findByName(RoleName.valueOf(signUpRequest.getRole().toUpperCase()))
+	      //          .orElseThrow(() -> new KarudaException("User Role not set."));
+
+		  //  existing.setRoles(Collections.singleton(userRole));
+			return userRepository.saveAndFlush(existing);
 		}
 		return null;
 	}

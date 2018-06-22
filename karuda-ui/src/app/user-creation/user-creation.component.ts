@@ -21,31 +21,33 @@ export class UserCreationComponent implements OnInit {
   user:User;
 
   roles = [
-    'User',
-    'Admin',
-    'Super Admin',
+    {name:'User',key:'USER'},
+    {name:'Admin',key: 'ADMIN'},
+    {name:'Super Admin', key:"SUPER_ADMIN" }
   ];
      
 
   ngOnInit() {
     this.form = this.fb.group({
+      id:[''],
       name: ['', Validators.required],
       email: ['', Validators.required],
       username: ['', Validators.required],
       role: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    },{validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
+      password: ['', ],
+      confirmPassword: ['', ]
+    },
+    {validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
     this.setValues();
   }
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
     return (group: FormGroup) => {
       let passwordInput = group.controls[passwordKey],
           passwordConfirmationInput = group.controls[passwordConfirmationKey];
-      if (passwordInput.value !== passwordConfirmationInput.value) {
+      if (passwordInput.value !== passwordConfirmationInput.value &&  !this.editFlag) {
         return passwordConfirmationInput.setErrors({notEquivalent: true})
       }
-      else if( passwordConfirmationInput.value == ''){
+      else if( (passwordConfirmationInput.value == '' || !passwordConfirmationInput.value) && !this.editFlag){
         return passwordConfirmationInput.setErrors({required: true})
       }
       else{
@@ -57,14 +59,17 @@ export class UserCreationComponent implements OnInit {
     this.user =this.commonService.getUser();
     if (this.user) {  
       this.editFlag = true;
-      this.form.get("password").clearValidators();
-      this.form.get("confirmPassword").clearValidators();
+      console.log(this.user);
       this.form.patchValue({
+        id : this.user.id,
         name: this.user.name,
         email: this.user.email,
         username: this.user.username,
-       // role :this.user.role,
+        role :this.user.roles[0].name,
       });
+    } else {
+      this.form.get("password").setValidators(Validators.required); 
+      this.form.get("confirmPassword").setValidators(Validators.required); 
     }
   } 
   reset(){

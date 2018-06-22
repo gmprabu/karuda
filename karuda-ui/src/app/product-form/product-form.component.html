@@ -1,3 +1,64 @@
-<p class="page-top-margin">
-  product-form works!
-</p>
+<div class="page-top-margin">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div fxLayout="row">
+  
+        <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
+          <div fxFlex>
+            <mat-form-field>
+              <input matInput placeholder="Name" formControlName="name">
+              <mat-error *ngIf="form.get('name').hasError('required')">
+                Name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <mat-form-field>
+              <input matInput placeholder="Username" formControlName="username">
+              <mat-error *ngIf="form.get('username').hasError('required')">
+                Username is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <mat-form-field>
+              <input matInput placeholder="Email" formControlName="email">
+              <mat-error *ngIf="form.get('email').hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="form.get('email').hasError('email')">
+                Email is no valid
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex *ngIf="!editFlag">
+            <mat-form-field>
+              <input type="password" matInput placeholder="Password" formControlName="password">
+              <mat-error *ngIf="form.get('password').hasError('required')">
+                Password is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex *ngIf="!editFlag">
+            <mat-form-field>
+              <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+              <mat-error *ngIf="form.get('confirmPassword').hasError('required')">
+                Confirm Password is required
+              </mat-error>
+              <mat-error *ngIf="form.get('confirmPassword').hasError('notEquivalent')">
+                Confirm Password is not matching with password
+              </mat-error>
+  
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <div fxLayout="row" fxLayoutAlign="end">
+              <button mat-raised-button (click)="reset()"> Reset</button>
+              <button type="submit" class="mat-raised-button mat-primary save">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

@@ -19,6 +19,7 @@ export class UserCreationComponent implements OnInit {
   constructor(private fb: FormBuilder, private commonService:CommonService,
     private userService:UserListService,  private router:Router) { }
   user:User;
+  formSubmitAttempt:boolean = false; 
 
   roles = [
     {name:'User',key:'USER'},
@@ -54,6 +55,13 @@ export class UserCreationComponent implements OnInit {
         return passwordConfirmationInput.setErrors(null);
       }
     }
+  }
+
+  isFieldInvalid(field: string) { 
+    return (
+      (!this.form.get(field).valid && this.form.get(field).touched) ||
+      (this.form.get(field).untouched && this.formSubmitAttempt)
+    );
   }
   public setValues() {
     this.user =this.commonService.getUser();
@@ -95,6 +103,8 @@ export class UserCreationComponent implements OnInit {
           this.router.navigateByUrl('/users');
         });  
       }       
-    }}
+    }
+    this.formSubmitAttempt = true; 
+  }
 }
 

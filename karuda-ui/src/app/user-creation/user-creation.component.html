@@ -5,7 +5,7 @@
       <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
         <div fxFlex>
           <mat-form-field>
-            <input matInput placeholder="Name" formControlName="name">
+            <input matInput placeholder="Name" formControlName="name" required>
             <mat-error *ngIf="form.get('name').hasError('required')">
               Name is required
             </mat-error>
@@ -13,7 +13,7 @@
         </div>
         <div fxFlex>
           <mat-form-field>
-            <input matInput placeholder="Username" formControlName="username">
+            <input matInput placeholder="Username" formControlName="username" required>
             <mat-error *ngIf="form.get('username').hasError('required')">
               Username is required
             </mat-error>
@@ -21,7 +21,7 @@
         </div>
         <div fxFlex>
           <mat-form-field>
-            <input matInput placeholder="Email" formControlName="email">
+            <input matInput placeholder="Email" formControlName="email" required>
             <mat-error *ngIf="form.get('email').hasError('required')">
               Email is required
             </mat-error>
@@ -32,7 +32,7 @@
         </div>
         <div fxFlex *ngIf="!editFlag">
           <mat-form-field>
-            <input type="password" matInput placeholder="Password" formControlName="password">
+            <input type="password" matInput placeholder="Password" formControlName="password" required>
             <mat-error *ngIf="form.get('password').hasError('required')">
               Password is required
             </mat-error>
@@ -40,7 +40,7 @@
         </div>
         <div fxFlex *ngIf="!editFlag">
           <mat-form-field>
-            <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+            <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
             <mat-error *ngIf="form.get('confirmPassword').hasError('required')">
               Confirm Password is required
             </mat-error>
@@ -51,13 +51,13 @@
           </mat-form-field>
         </div>
         <div fxFlex>
-          <mat-radio-group class="radio-group" formControlName="role">
+          <mat-radio-group class="radio-group" formControlName="role" required>
             <mat-radio-button class="radio-button" *ngFor="let role of roles" [value]="role.key">
               {{role.name}}
             </mat-radio-button>
           </mat-radio-group>
-          <mat-error *ngIf="!form.controls['role'].valid && form.controls['role'].touched">
-             Role is required
+          <mat-error *ngIf="isFieldInvalid('role')">
+            Role is required
           </mat-error>
         </div>
         <div fxFlex>

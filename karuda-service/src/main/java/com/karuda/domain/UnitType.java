@@ -1,9 +1,13 @@
 package com.karuda.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.NaturalId;
 
 import com.karuda.domain.audit.UserAudit;
 
@@ -19,5 +23,7 @@ public class UnitType  extends UserAudit {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String type;
+	@Enumerated(EnumType.STRING)
+    @NaturalId
+	private UnitTypes type;
 }

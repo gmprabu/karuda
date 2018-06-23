@@ -9,11 +9,17 @@ import { Router } from '@angular/router';
 })
 export class ProductFormComponent implements OnInit {
 
+  formSubmitAttempt: boolean = false;
   form: FormGroup;
   description: string;
   editFlag:boolean = false;
+  selectedFile:any = null;
   constructor(private fb: FormBuilder,  private router:Router) { }
-
+  
+  units = [
+    {name:'Kgs',key:'kg'},
+    {name:'Litters',key: 'ltr'}
+  ];
 
 
   ngOnInit() {
@@ -21,10 +27,10 @@ export class ProductFormComponent implements OnInit {
       id:[''],
       name: ['', Validators.required],
       email: ['', Validators.required],
-      username: ['', Validators.required],
-      role: ['', Validators.required],
-      password: ['', ],
-      confirmPassword: ['', ]
+      description: ['', Validators.required],
+      stock:['', Validators.required],
+      unit : ['', Validators.required],
+      imageName : ['', Validators.required]
     });
     this.setValues();
   }
@@ -32,14 +38,25 @@ export class ProductFormComponent implements OnInit {
 
     
   } 
+
+  
+  isFieldInvalid(field: string) { 
+    return (
+      (!this.form.get(field).valid && this.form.get(field).touched) ||
+      (this.form.get(field).untouched && this.formSubmitAttempt)
+    );
+  }
+  
+  onFileSelected(event){
+    this.selectedFile = event.target.files[0];  
+    console.log(this.selectedFile);
+    this.form.patchValue({ imageName : this.selectedFile.name });
+  }
   reset(){
     this.form.patchValue({
       name: undefined,
       email: undefined,
-      username: undefined,
-      password:undefined,
-      confirmPassword:undefined,
-      role:undefined
+      description: undefined
     });
   }
   onSubmit() {
@@ -51,6 +68,8 @@ export class ProductFormComponent implements OnInit {
       else{
        
       }       
-    }}
+    }
+    this.formSubmitAttempt =true;
+  }
 
 }

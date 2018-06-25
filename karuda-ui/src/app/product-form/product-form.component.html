@@ -23,13 +23,13 @@
             <label  class="md-button md-raised md-primary">Unit type</label>
             </div>
             <div fxFlex>    
-            <mat-radio-group class="radio-group" formControlName="unit" required>
+            <mat-radio-group class="radio-group" formControlName="type" required>
               <mat-radio-button class="radio-button" *ngFor="let unit of units" [value]="unit.key">
                 {{unit.name}}
               </mat-radio-button>
             </mat-radio-group>
-            <mat-error *ngIf="isFieldInvalid('unit')">
-              Role is required
+            <mat-error *ngIf="isFieldInvalid('type')">
+              Unit type is required
             </mat-error>
           </div>
         <div fxFlex>
@@ -44,8 +44,8 @@
           <div fxLayout="row">
             <div fxFlex="98%">
               <mat-form-field>
-                <input matInput placeholder="Product Image" formControlName="imageName" required>
-                <mat-error *ngIf="form.get('imageName').hasError('required')">
+                <input matInput placeholder="Product Image" formControlName="image" required>
+                <mat-error *ngIf="form.get('image').hasError('required')">
                     Product image is required
                   </mat-error>
               </mat-form-field>

@@ -31,7 +31,7 @@ public class Product extends UserAudit {
 	private String description;
 	
 	@Column
-	private String stock;
+	private int stock;
 	
 	@Lob
 	@Column

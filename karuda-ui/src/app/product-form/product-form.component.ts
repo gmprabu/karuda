@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ProductService } from '../product-list/product.service';
 
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.css']
+  styleUrls: ['./product-form.component.css'],
+  providers :[ProductService]
 })
 export class ProductFormComponent implements OnInit {
 
@@ -14,11 +16,12 @@ export class ProductFormComponent implements OnInit {
   description: string;
   editFlag:boolean = false;
   selectedFile:any = null;
-  constructor(private fb: FormBuilder,  private router:Router) { }
+  constructor(private fb: FormBuilder,  private router:Router,
+    private productService:ProductService) { }
   
   units = [
-    {name:'Kgs',key:'kg'},
-    {name:'Litters',key: 'ltr'}
+    {name:'Kgs',key:'KGS'},
+    {name:'Litters',key: 'LTR'}
   ];
 
 
@@ -26,11 +29,10 @@ export class ProductFormComponent implements OnInit {
     this.form = this.fb.group({
       id:[''],
       name: ['', Validators.required],
-      email: ['', Validators.required],
       description: ['', Validators.required],
       stock:['', Validators.required],
-      unit : ['', Validators.required],
-      imageName : ['', Validators.required]
+      type : ['', Validators.required],
+      image : ['', Validators.required]
     });
     this.setValues();
   }
@@ -50,23 +52,38 @@ export class ProductFormComponent implements OnInit {
   onFileSelected(event){
     this.selectedFile = event.target.files[0];  
     console.log(this.selectedFile);
-    this.form.patchValue({ imageName : this.selectedFile.name });
+    this.form.patchValue({ image : this.selectedFile.name });
   }
   reset(){
     this.form.patchValue({
       name: undefined,
-      email: undefined,
-      description: undefined
+      description: undefined,
+      stock: undefined,
+      type: undefined,
+      image: undefined,
     });
+    this.selectedFile = null;
   }
+
   onSubmit() {
-    
     if (this.form.valid) {
+      let formdata: FormData = new FormData();
+      formdata.append('file', this.selectedFile);
+      var myObj = {
+        name: this.form.value.name,
+        description:this.form.value.description ,
+        stock:this.form.value.stock, 
+        type:this.form.value.type};  
+  
+      formdata.append('product',JSON.stringify(myObj));
+
       if(this.editFlag){
-       
+      
       }
       else{
-       
+        this.productService.addProduct(formdata).subscribe(data => {
+          this.router.navigateByUrl('/users');
+        });  
       }       
     }
     this.formSubmitAttempt =true;

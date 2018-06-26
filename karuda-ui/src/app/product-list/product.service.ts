@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../model/user';
 import { Product } from '../model/product';
 
 @Injectable()
@@ -9,8 +8,8 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<User[]> {
-    return this.http.get<User[]>('/api/products');
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>('/api/products');
   }
 
   addProduct(user: any): Observable<any> {
@@ -20,11 +19,11 @@ export class ProductService {
     });
   }
 
-  updateProduct(user: User): Observable<User> {
-    return this.http.put<User>('/api/products/', user);
+  updateProduct(user: any): Observable<any> {
+    return this.http.put<any>('/api/products/', user);
   }
 
-  removeProduct(user: User): Observable<any> {
+  removeProduct(user: Product): Observable<any> {
     return this.http.delete('/api/products/' + user.id );
   }
 

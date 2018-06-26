@@ -2,13 +2,14 @@ package com.karuda.controller;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,15 +32,31 @@ public class ProductController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ApiResponse> addProduct(@RequestPart("product") String product,@RequestPart("file") MultipartFile file) {
+	public ResponseEntity<ApiResponse> addProduct(@RequestPart("product") String product,
+			@RequestPart("file") MultipartFile file) {
 		
-		System.out.println(file);	
 		Product result =service.addProduct(product, file);
-		
 		if (result != null) {
 			return ResponseEntity.ok(new ApiResponse(true, "Product created successfully"));
 		} 
 		return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Unable to create product..!"),
 				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@PutMapping
+	public ResponseEntity<ApiResponse> updateProduct(@RequestPart("product") String product,
+			@RequestPart("file") MultipartFile file) {
+		
+		Product result =service.updateProduct(product, file);
+		if (result != null) {
+			return ResponseEntity.ok(new ApiResponse(true, "Product updated successfully"));
+		} 
+		return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Unable to update product..!"),
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	@DeleteMapping("/{id}")
+	public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
+		 service.removeProduct(id);
+		 return ResponseEntity.ok(new ApiResponse(true, "Product deleted successfully"));
 	}
 }

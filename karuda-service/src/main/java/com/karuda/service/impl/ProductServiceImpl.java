@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.karuda.domain.Product;
 import com.karuda.domain.UnitType;
-import com.karuda.domain.UnitTypes;
+import com.karuda.domain.UnitTypeName;
 import com.karuda.exception.KarudaException;
 import com.karuda.repository.ProductRepository;
 import com.karuda.repository.UnitsRepository;
@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	ProductRepository repository;
-	
+
 	@Autowired
 	UnitsRepository unitRepository;
 
@@ -32,46 +32,57 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product addProduct(String obj ,  MultipartFile  file) {
-	
-		JSONObject productObj = null;
-		try {
-			productObj = new JSONObject(obj);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public Product addProduct(String obj, MultipartFile file) {
+
+		Product product =constructProduct( obj, file) ;
+		if(product != null) {
+			product = repository.save(product);
 		}
-		if(productObj != null) {
-			
-			Product product = new Product();
-			
-			product.setName(productObj.getString("name"));
-			product.setDescription(productObj.getString("description"));
-			product.setStock(productObj.getInt("stock"));
-			
-			UnitType type = unitRepository.findByType(UnitTypes.valueOf(productObj.getString("type")))
-		                .orElseThrow(() -> new KarudaException("unit type not set."));
-			product.setType( type);
-			try {
-				product.setImage(file.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			return repository.save(product);
-		}
-		return null;
+		return product;
 	}
 
 	@Override
-	public Product updateProduct(String obj , MultipartFile file) {
-		// TODO Auto-generated method stub
-		return null;
+	public Product updateProduct(String obj, MultipartFile file) {
+		Product product =constructProduct( obj, file) ;
+		if(product != null) {
+			product = repository.save(product);
+		}
+		return product;
 	}
 
 	@Override
 	public void removeProduct(Long id) {
 		repository.deleteById(id);
-		
+
+	}
+
+	private Product constructProduct(String obj, MultipartFile file) {
+		JSONObject productObj = null;
+		Product product = null;
+		try {
+			productObj = new JSONObject(obj);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		if (productObj != null) {
+
+			product = new Product();
+			if(!productObj.getString("id").isEmpty()) {
+				product.setId(productObj.getLong("id"));
+			}
+			product.setName(productObj.getString("name"));
+			product.setDescription(productObj.getString("description"));
+			product.setStock(productObj.getInt("stock"));
+			product.setCategory(productObj.getString("category"));
+			UnitType type = unitRepository.findByType(UnitTypeName.valueOf(productObj.getString("unitType")))
+					.orElseThrow(() -> new KarudaException("unit type not set."));
+			product.setUnitType(type);
+			try {
+				product.setImage(file.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return product;
 	}
 }

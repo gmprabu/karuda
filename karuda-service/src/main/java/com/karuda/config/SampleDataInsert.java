@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.karuda.domain.Role;
 import com.karuda.domain.RoleName;
 import com.karuda.domain.UnitType;
-import com.karuda.domain.UnitTypes;
+import com.karuda.domain.UnitTypeName;
 import com.karuda.domain.User;
 import com.karuda.repository.RoleRepository;
 import com.karuda.repository.UnitsRepository;
@@ -62,10 +62,10 @@ public class SampleDataInsert implements CommandLineRunner {
     	userRepository.save(user);
     	
     	UnitType type = new UnitType();
-    	type.setType(UnitTypes.KGS);
+    	type.setType(UnitTypeName.KGS);
     	unit.save(type);
     	type = new UnitType();
-    	type.setType(UnitTypes.LTR);
+    	type.setType(UnitTypeName.LTR);
     	unit.save(type);
     }
 }

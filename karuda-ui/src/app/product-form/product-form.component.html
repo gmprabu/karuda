@@ -19,22 +19,34 @@
             </mat-error>
           </mat-form-field>
         </div>
+        <div fxFlex>    
+            <mat-form-field>
+              <mat-select placeholder="Category"  formControlName="category" required>
+                <mat-option *ngFor="let category of categories" [value]="category.value">
+                  {{ category.viewValue }}
+                </mat-option>
+              </mat-select>
+            <mat-error *ngIf="form.get('category').hasError('required')">
+              Category is required
+            </mat-error>
+          </mat-form-field>
+        </div>
         <div fxFlex>
             <label  class="md-button md-raised md-primary">Unit type</label>
             </div>
             <div fxFlex>    
-            <mat-radio-group class="radio-group" formControlName="type" required>
+            <mat-radio-group class="radio-group" formControlName="unitType" required>
               <mat-radio-button class="radio-button" *ngFor="let unit of units" [value]="unit.key">
                 {{unit.name}}
               </mat-radio-button>
             </mat-radio-group>
-            <mat-error *ngIf="isFieldInvalid('type')">
+            <mat-error *ngIf="isFieldInvalid('unitType')">
               Unit type is required
             </mat-error>
           </div>
         <div fxFlex>
             <mat-form-field>
-                <input matInput placeholder="Stock" formControlName="stock" required>
+                <input matInput type="number" placeholder="Stock(number)" formControlName="stock" required>
               <mat-error *ngIf="form.get('description').hasError('required')">
                 Stock is required
               </mat-error>

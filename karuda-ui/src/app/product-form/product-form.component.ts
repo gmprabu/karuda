@@ -24,14 +24,21 @@ export class ProductFormComponent implements OnInit {
     {name:'Litters',key: 'LTR'}
   ];
 
+  categories = [
+    {value: 'Soap', viewValue: 'Soap'},
+    {value: 'Detergent', viewValue: 'Detergent'},
+    {value: 'Perfume', viewValue: 'Perfume'}
+  ];
+
 
   ngOnInit() {
     this.form = this.fb.group({
       id:[''],
       name: ['', Validators.required],
       description: ['', Validators.required],
-      stock:['', Validators.required],
-      type : ['', Validators.required],
+      category :['', Validators.required],
+      stock:['', Validators.required ],
+      unitType : ['', Validators.required],
       image : ['', Validators.required]
     });
     this.setValues();
@@ -58,8 +65,9 @@ export class ProductFormComponent implements OnInit {
     this.form.patchValue({
       name: undefined,
       description: undefined,
+      category : undefined,
       stock: undefined,
-      type: undefined,
+      unitType: undefined,
       image: undefined,
     });
     this.selectedFile = null;
@@ -70,10 +78,12 @@ export class ProductFormComponent implements OnInit {
       let formdata: FormData = new FormData();
       formdata.append('file', this.selectedFile);
       var myObj = {
+        id : this.form.value.id,
         name: this.form.value.name,
         description:this.form.value.description ,
+        category:this.form.value.category,
         stock:this.form.value.stock, 
-        type:this.form.value.type};  
+        unitType:this.form.value.unitType};  
   
       formdata.append('product',JSON.stringify(myObj));
 
@@ -82,7 +92,7 @@ export class ProductFormComponent implements OnInit {
       }
       else{
         this.productService.addProduct(formdata).subscribe(data => {
-          this.router.navigateByUrl('/users');
+          this.router.navigateByUrl('/products');
         });  
       }       
     }

@@ -28,6 +28,9 @@ public class Product extends UserAudit {
 	private String name;
 	
 	@Column
+	private String category;
+	
+	@Column
 	private String description;
 	
 	@Column
@@ -37,7 +40,7 @@ public class Product extends UserAudit {
 	@Column
 	private byte[] image;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	UnitType type;
+	@ManyToOne()
+	UnitType unitType;
 	
 }

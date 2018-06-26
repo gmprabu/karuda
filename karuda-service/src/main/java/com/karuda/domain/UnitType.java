@@ -25,5 +25,5 @@ public class UnitType  extends UserAudit {
 	
 	@Enumerated(EnumType.STRING)
     @NaturalId
-	private UnitTypes type;
+	private UnitTypeName type;
 }

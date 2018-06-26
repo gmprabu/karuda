@@ -6,3 +6,9 @@
 .mat-card{
   background-color: #0000000d;
 }
+.product-card{
+  min-height: 150px;
+}
+.content{
+  min-height: 50px;
+}

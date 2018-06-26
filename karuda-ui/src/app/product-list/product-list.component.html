@@ -9,6 +9,8 @@
         </span>
     </div>
 </div>
-<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="2%">
-  <app-product *ngFor="let i of items"  class="card-item" fxFlex="30%;" fxFlex.xs="80%"></app-product>  
+<div fxLayout="row wrap"  fxLayout.lt-md="column wrap" fxLayoutGap="2%">
+  <app-product *ngFor="let product of products" [product]="product" 
+  (edit)="editProduct($event)" (remove)="removeProduct($event)"  (stockUpdate)="addStock($event)"
+  class="card-item" fxFlex="30%;" fxFlex.lt-md="50%" fxFlex.xs="80%"></app-product>  
 </div>

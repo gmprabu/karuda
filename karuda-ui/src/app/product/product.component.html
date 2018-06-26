@@ -1,6 +1,6 @@
 <mat-card class="product-card">
   <mat-card-header>
-    <div mat-card-avatar class="header-image"></div>
+    <div mat-card-avatar class="header-image">test</div>
     <mat-card-title>{{product.name}}</mat-card-title>
     <mat-card-subtitle>{{product.category}}</mat-card-subtitle>
   </mat-card-header>
@@ -8,6 +8,9 @@
   <mat-card-content class="content">
     <p>
       {{product.description}}
+    </p>
+    <p>
+      <strong>Current Stock:</strong> {{product.stock}}
     </p>
   </mat-card-content>
   <mat-card-actions align="end">

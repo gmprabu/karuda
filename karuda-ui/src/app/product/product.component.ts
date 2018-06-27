@@ -9,6 +9,7 @@ import { Product } from '../model/product';
 })
 export class ProductComponent implements OnInit {
 
+  imageData: any;
   @Input() product:Product;
 
   @Output() stockUpdate = new EventEmitter<any>();
@@ -19,6 +20,8 @@ export class ProductComponent implements OnInit {
 
   constructor() { }
   ngOnInit() {
+
+    this.imageData = 'data:image/JPEG;base64,' + this.product.image;
   }
   editProduct(){
     this.edit.emit({ inputs: this.product });

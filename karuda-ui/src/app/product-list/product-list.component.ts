@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ProductService } from './product.service';
 import { Product } from '../model/product';
 import { DialogsService } from '../shared/dialogs.service';
+import { CommonService } from '../shared/common.service';
 
 @Component({
   selector: 'app-product-list',
@@ -13,7 +14,7 @@ import { DialogsService } from '../shared/dialogs.service';
 export class ProductListComponent implements OnInit {
 
   constructor(private router:Router, private productService:ProductService,
-    private dialogsService: DialogsService) { }
+    private dialogsService: DialogsService, private commonService:CommonService) { }
 
   products:Product[];
    
@@ -32,7 +33,8 @@ export class ProductListComponent implements OnInit {
   }
 
   editProduct(value){
-  
+    this.commonService.setProduct(value.inputs);
+    this.router.navigateByUrl('/editProduct');
   }
   addStock(value){
   

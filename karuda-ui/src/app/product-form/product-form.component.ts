@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductService } from '../product-list/product.service';
+import { CommonService } from '../shared/common.service';
+import { Product } from '../model/product';
 
 @Component({
   selector: 'app-product-form',
@@ -15,9 +17,10 @@ export class ProductFormComponent implements OnInit {
   form: FormGroup;
   description: string;
   editFlag:boolean = false;
+  product : Product;
   selectedFile:any = null;
   constructor(private fb: FormBuilder,  private router:Router,
-    private productService:ProductService) { }
+    private productService:ProductService, private commonService:CommonService)  { }
   
   units = [
     {name:'Kgs',key:'KGS'},
@@ -45,7 +48,18 @@ export class ProductFormComponent implements OnInit {
   }
   public setValues() {
 
-    
+    this.product =this.commonService.getProduct();
+    if (this.product) {  
+      this.editFlag = true;
+      this.form.patchValue({
+        id : this.product.id,
+        name: this.product.name,
+        description: this.product.description,
+        category: this.product.category,
+        stock: this.product.stock,
+        unitType :this.product.unitType.type
+      });
+    }
   } 
 
   

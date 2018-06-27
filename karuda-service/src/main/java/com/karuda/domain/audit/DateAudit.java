@@ -17,11 +17,5 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
 public class DateAudit {
 
-	@CreatedDate
-	@Column(nullable = false, updatable = false)
-	private Instant createdAt;
-
-	@LastModifiedDate
-	@Column(nullable = false)
-	private Instant updatedAt;
+	
 }

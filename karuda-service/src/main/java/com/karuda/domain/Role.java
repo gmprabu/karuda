@@ -10,13 +10,13 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.NaturalId;
 
-import com.karuda.domain.audit.DateAudit;
+import com.karuda.domain.audit.UserAudit;
 
 import lombok.Data;
 
 @Entity
 @Data
-public class Role extends DateAudit {
+public class Role {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

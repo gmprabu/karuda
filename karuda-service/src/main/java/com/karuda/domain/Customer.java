@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.karuda.domain.audit.DateAudit;
+import com.karuda.domain.audit.UserAudit;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class Customer extends DateAudit {
+public class Customer extends UserAudit {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

@@ -1,8 +1,11 @@
+import { UnitType } from "./unitType";
+
 export class Product{
     id?:number;
     name:string;
     description?:string;
+    category:string;
     stock:number;
-    type:string;
+    unitType:UnitType;
     image:Blob;
 }

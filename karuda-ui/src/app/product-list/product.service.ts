@@ -12,19 +12,19 @@ export class ProductService {
     return this.http.get<Product[]>('/api/products');
   }
 
-  addProduct(user: any): Observable<any> {
-    return this.http.post<Product>('/api/products', user).catch((err) => {
+  addProduct(product: any): Observable<any> {
+    return this.http.post<Product>('/api/products', product).catch((err) => {
       console.log(err);
       return Observable.throw(err);
     });
   }
 
-  updateProduct(user: any): Observable<any> {
-    return this.http.put<any>('/api/products/', user);
+  updateProduct(product: any): Observable<Product> {
+    return this.http.put<any>('/api/products/', product);
   }
 
-  removeProduct(user: Product): Observable<any> {
-    return this.http.delete('/api/products/' + user.id );
+  removeProduct(product: Product): Observable<any> {
+    return this.http.delete('/api/products/' + product.id );
   }
 
 }

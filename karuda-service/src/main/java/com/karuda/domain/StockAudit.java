@@ -22,7 +22,7 @@ public class StockAudit  extends UserAudit {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private Long quantity;
+	private int quantity;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	Product product;

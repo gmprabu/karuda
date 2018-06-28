@@ -44,7 +44,7 @@
               Unit type is required
             </mat-error>
           </div>
-        <div fxFlex>
+        <div fxFlex *ngIf="!editFlag">
             <mat-form-field>
                 <input matInput type="number" placeholder="Stock(number)" formControlName="stock" required>
               <mat-error *ngIf="form.get('description').hasError('required')">
@@ -52,7 +52,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-        <div fxFlex>
+        <div fxFlex  *ngIf="!editFlag">
           <div fxLayout="row">
             <div fxFlex="98%">
               <mat-form-field>

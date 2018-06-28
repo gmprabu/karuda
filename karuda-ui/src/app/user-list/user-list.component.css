@@ -1,12 +1,6 @@
 table {
     width: 100%;
   }
-.cursor {
-     cursor: pointer;
-  }
-.delete {
-      margin-left: 8%;
-    }
 .mat-table {
       border: 2px solid #E6E6E5;
   }

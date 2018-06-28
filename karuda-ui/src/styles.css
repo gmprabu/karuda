@@ -41,3 +41,9 @@ html, body, app-root, mat-sidenav-container, .side {
 .page-top-margin{
   margin-top: 8%;
 }
+.cursor {
+  cursor: pointer;
+}
+.delete {
+   margin-left: 8%;
+ }

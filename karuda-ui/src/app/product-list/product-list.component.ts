@@ -20,12 +20,12 @@ export class ProductListComponent implements OnInit {
    
   ngOnInit() {
     this. getAllProducts();
+    this.commonService.setProduct(null);
   }
 
   getAllProducts() {
     this.productService.getProducts().subscribe((data) => {
       this.products = data;
-      console.log(this.products);
     });
   }
   openAddProduct(){

@@ -40,9 +40,9 @@ export class ProductFormComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       category :['', Validators.required],
-      stock:['', Validators.required ],
+      stock:['', ],
       unitType : ['', Validators.required],
-      image : ['', Validators.required]
+      image : ['', ]
     });
     this.setValues();
   }
@@ -59,6 +59,9 @@ export class ProductFormComponent implements OnInit {
         stock: this.product.stock,
         unitType :this.product.unitType.type
       });
+    }else{
+      this.form.get("stock").setValidators(Validators.required); 
+      this.form.get("image").setValidators(Validators.required); 
     }
   } 
 
@@ -66,7 +69,7 @@ export class ProductFormComponent implements OnInit {
   isFieldInvalid(field: string) { 
     return (
       (!this.form.get(field).valid && this.form.get(field).touched) ||
-      (this.form.get(field).untouched && this.formSubmitAttempt)
+      (this.form.get(field).untouched && this.formSubmitAttempt && !this.form.value.unitType)
     );
   }
   
@@ -89,22 +92,32 @@ export class ProductFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      let formdata: FormData = new FormData();
-      formdata.append('file', this.selectedFile);
-      var myObj = {
-        id : this.form.value.id,
-        name: this.form.value.name,
-        description:this.form.value.description ,
-        category:this.form.value.category,
-        stock:this.form.value.stock, 
-        unitType:this.form.value.unitType};  
-  
-      formdata.append('product',JSON.stringify(myObj));
-
+    
       if(this.editFlag){
-      
+
+        this.product.name = this.form.value.name;
+        this.product.description = this.form.value.description;
+        this.product.category =this.form.value.category;
+        let unit = this.product.unitType;
+        unit.type =  this.form.value.unitType;
+        this.product.unitType = unit;
+        this.productService.updateProduct(this.product).subscribe(data => {
+          this.router.navigateByUrl('/products');
+        });  
       }
       else{
+        let formdata: FormData = new FormData();
+        formdata.append('file', this.selectedFile);
+        var myObj = {
+          id : this.form.value.id,
+          name: this.form.value.name,
+          description:this.form.value.description ,
+          category:this.form.value.category,
+          stock:this.form.value.stock, 
+          unitType:this.form.value.unitType
+        };  
+    
+        formdata.append('product',JSON.stringify(myObj));
         this.productService.addProduct(formdata).subscribe(data => {
           this.router.navigateByUrl('/products');
         });  

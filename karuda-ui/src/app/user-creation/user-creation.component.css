@@ -20,3 +20,10 @@ textarea {
       margin-left: 2%;
   }
 
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #673ab7 !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color:#673ab7 !important;
+}

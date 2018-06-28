@@ -17,3 +17,8 @@ mat-card img{
   height: 100%;
   border-radius: 50%;
 }
+
+.add-stock{
+  margin-right: 5% !important;
+  font-size: 12px;
+}

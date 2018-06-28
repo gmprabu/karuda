@@ -12,7 +12,7 @@ public interface ProductService {
 	
 	Product addProduct(String obj ,MultipartFile file);
 	
-	Product updateProduct(String obj ,MultipartFile file);
+	Product updateProduct(Product prod);
 	
 	void removeProduct(Long id);
 

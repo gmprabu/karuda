@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.karuda.domain.Product;
+import com.karuda.domain.StockAudit;
 import com.karuda.domain.UnitType;
 import com.karuda.domain.UnitTypeName;
 import com.karuda.exception.KarudaException;
 import com.karuda.repository.ProductRepository;
+import com.karuda.repository.StockAuditRepository;
 import com.karuda.repository.UnitsRepository;
 import com.karuda.service.ProductService;
 
@@ -25,6 +27,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	UnitsRepository unitRepository;
+	
+	@Autowired
+	StockAuditRepository auditRepo;
 
 	@Override
 	public List<Product> getProducts() {
@@ -37,23 +42,30 @@ public class ProductServiceImpl implements ProductService {
 		Product product =constructProduct( obj, file) ;
 		if(product != null) {
 			product = repository.save(product);
+			
+			if(product != null) {
+				addStockAudit(product);
+			}
 		}
 		return product;
 	}
 
 	@Override
-	public Product updateProduct(String obj, MultipartFile file) {
-		Product product =constructProduct( obj, file) ;
-		if(product != null) {
-			product = repository.save(product);
-		}
-		return product;
+	public Product updateProduct(Product product) {		
+		return  repository.save(product);
 	}
 
 	@Override
 	public void removeProduct(Long id) {
 		repository.deleteById(id);
 
+	}
+	
+	private void addStockAudit(Product prod) {
+		StockAudit audit = new StockAudit();
+		audit.setProduct(prod);
+		audit.setQuantity(prod.getStock());
+		auditRepo.save(audit);
 	}
 
 	private Product constructProduct(String obj, MultipartFile file) {

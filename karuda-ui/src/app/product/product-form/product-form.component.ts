@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductService } from '../product-list/product.service';
-import { CommonService } from '../shared/common.service';
-import { Product } from '../model/product';
+import { Product } from '../../model/product';
+import { CommonService } from '../../shared/common.service';
+
 
 @Component({
   selector: 'app-product-form',
@@ -38,7 +39,7 @@ export class ProductFormComponent implements OnInit {
     this.form = this.fb.group({
       id:[''],
       name: ['', Validators.required],
-      description: ['', Validators.required],
+      description: new FormControl('', [Validators.minLength(5), Validators.maxLength(200)]), 
       category :['', Validators.required],
       stock:['', ],
       unitType : ['', Validators.required],
@@ -49,6 +50,7 @@ export class ProductFormComponent implements OnInit {
   public setValues() {
 
     this.product =this.commonService.getProduct();
+    console.log(this.product);
     if (this.product) {  
       this.editFlag = true;
       this.form.patchValue({

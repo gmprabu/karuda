@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
 import { MatTableDataSource, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
 import { UserCreationComponent } from '../user-creation/user-creation.component';
-import { User } from '../model/user';
-import { DialogsService } from '../shared/dialogs.service';
 import { UserListService } from './user-list.service';
 import { Router } from '@angular/router';
-import { CommonService } from '../shared/common.service';
+import { AuthService } from '../../auth/auth.service';
+import { DialogsService } from '../../shared/dialogs.service';
+import { CommonService } from '../../shared/common.service';
+import { User } from '../../model/user';
+
 
 @Component({
   selector: 'app-user-list',

@@ -1,13 +1,14 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Product } from '../model/product';
+import { Product } from '../../model/product';
+
 
 
 @Component({
   selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  templateUrl: './product-card.component.html',
+  styleUrls: ['./product-card.component.css']
 })
-export class ProductComponent implements OnInit {
+export class ProductCardComponent implements OnInit {
 
   imageData: any;
   @Input() product:Product;

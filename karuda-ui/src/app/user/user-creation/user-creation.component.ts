@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
-import { User } from '../model/user';
-import { CommonService } from '../shared/common.service';
 import { UserListService } from '../user-list/user-list.service';
 import { Router } from '@angular/router';
+import { CommonService } from '../../shared/common.service';
+import { User } from '../../model/user';
 
 @Component({
   selector: 'app-user-creation',
@@ -60,7 +60,7 @@ export class UserCreationComponent implements OnInit {
   isFieldInvalid(field: string) { 
     return (
       (!this.form.get(field).valid && this.form.get(field).touched) ||
-      (this.form.get(field).untouched && this.formSubmitAttempt)
+      (this.form.get(field).untouched && this.formSubmitAttempt && !this.form.value.role)
     );
   }
   public setValues() {

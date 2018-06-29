@@ -12,27 +12,19 @@ import { AuthGuard } from './auth/auth.guard';
 import { RoleGuardService } from './auth/role-guard.service';
 import { AuthService } from './auth/auth.service';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import { UserCreationComponent } from './user-creation/user-creation.component';
 import { DialogsService } from './shared/dialogs.service';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
-import { UserListComponent } from './user-list/user-list.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductComponent } from './product/product.component';
-import { ProductFormComponent } from './product-form/product-form.component';
 import { CommonService } from './shared/common.service';
 import { AuthInterceptor } from './auth/auth.intercept';
+import { ProductModule } from './product/product.module';
+import { UserMangementModule } from './user/user.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     LoginComponent,
-    UserCreationComponent,
     ConfirmDialogComponent,
-    UserListComponent,
-    ProductListComponent,
-    ProductComponent,
-    ProductFormComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +34,9 @@ import { AuthInterceptor } from './auth/auth.intercept';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule, 
-    FlexLayoutModule
+    FlexLayoutModule,
+    ProductModule,
+    UserMangementModule
   ],
   providers: [AuthGuard,RoleGuardService,AuthService,DialogsService,CommonService,
     {
@@ -51,6 +45,6 @@ import { AuthInterceptor } from './auth/auth.intercept';
       multi: true
   }],
   bootstrap: [AppComponent],
-  entryComponents : [UserCreationComponent,ConfirmDialogComponent]
+  entryComponents : [ConfirmDialogComponent]
 })
 export class AppModule { }

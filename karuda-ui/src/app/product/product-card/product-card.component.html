@@ -10,7 +10,7 @@
       {{product.description}}
     </p>
     <p>
-      <strong>Current Stock:</strong> {{product.stock}}
+      <strong>Current Stock:</strong> {{product.stock}}  {{ product.unitType.type | resolveUnits}}
     </p>
   </mat-card-content>
   <mat-card-actions align="end">

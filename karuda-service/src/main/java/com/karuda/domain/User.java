@@ -52,7 +52,7 @@ public class User extends UserAudit {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 
-	@NaturalId
+
 	@NotBlank
 	@Size(max = 40)
 	@Email

@@ -17,55 +17,60 @@
             <mat-error *ngIf="form.get('description').hasError('required')">
               Description is required
             </mat-error>
+            <mat-error *ngIf="form.get('description').hasError('maxlength')">
+                Description can be max 200 characters
+            </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex>    
-            <mat-form-field>
-              <mat-select placeholder="Category"  formControlName="category" required>
-                <mat-option *ngFor="let category of categories" [value]="category.value">
-                  {{ category.viewValue }}
-                </mat-option>
-              </mat-select>
+        <div fxFlex>
+          <mat-form-field>
+            <mat-select placeholder="Category" formControlName="category" required>
+              <mat-option *ngFor="let category of categories" [value]="category.value">
+                {{ category.viewValue }}
+              </mat-option>
+            </mat-select>
             <mat-error *ngIf="form.get('category').hasError('required')">
               Category is required
             </mat-error>
           </mat-form-field>
         </div>
         <div fxFlex>
-            <label  class="md-button md-raised md-primary">Unit type</label>
-            </div>
-            <div fxFlex>    
-            <mat-radio-group class="radio-group" formControlName="unitType" required>
-              <mat-radio-button class="radio-button" *ngFor="let unit of units" [value]="unit.key">
-                {{unit.name}}
-              </mat-radio-button>
-            </mat-radio-group>
-            <mat-error *ngIf="isFieldInvalid('unitType')">
-              Unit type is required
-            </mat-error>
-          </div>
+          <label class="md-button md-raised md-primary">Unit type</label>
+        </div>
+        <div fxFlex>
+          <mat-radio-group class="radio-group" formControlName="unitType" required>
+            <mat-radio-button class="radio-button" *ngFor="let unit of units" [value]="unit.key">
+              {{unit.name}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <mat-error *ngIf="isFieldInvalid('unitType')">
+            Unit type is required
+          </mat-error>
+        </div>
         <div fxFlex *ngIf="!editFlag">
-            <mat-form-field>
-                <input matInput type="number" placeholder="Stock(number)" formControlName="stock" required>
-              <mat-error *ngIf="form.get('description').hasError('required')">
-                Stock is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        <div fxFlex  *ngIf="!editFlag">
+          <mat-form-field>
+            <input matInput type="number" placeholder="Stock ({{ form.get('unitType').value  | resolveUnits}})" formControlName="stock"
+              required>
+            <mat-error *ngIf="form.get('description').hasError('required')">
+              Stock is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex *ngIf="!editFlag">
           <div fxLayout="row">
             <div fxFlex="98%">
               <mat-form-field>
                 <input matInput placeholder="Product Image" formControlName="image" required>
                 <mat-error *ngIf="form.get('image').hasError('required')">
-                    Product image is required
-                  </mat-error>
+                  Product image is required
+                </mat-error>
               </mat-form-field>
             </div>
             <div fxFlex>
-              <input class="ng-hide" id="input-file-id"  type="file" (change)="onFileSelected($event)"  />
+              <input class="ng-hide" id="input-file-id" type="file" (change)="onFileSelected($event)" />
               <label for="input-file-id" class="md-button md-raised md-primary">
-               <mat-icon class="material-icons file-icon">attach_file</mat-icon></label>
+                <mat-icon class="material-icons file-icon">attach_file</mat-icon>
+              </label>
             </div>
           </div>
         </div>

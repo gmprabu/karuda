@@ -73,10 +73,10 @@ public class UserServiceImpl implements UserService {
 			existing.setEmail(signUpRequest.getEmail());
 			existing.setUsername(signUpRequest.getUsername());
 			existing.setName(signUpRequest.getName());
-		 //   Role userRole = roleRepository.findByName(RoleName.valueOf(signUpRequest.getRole().toUpperCase()))
-	      //          .orElseThrow(() -> new KarudaException("User Role not set."));
+		 /*   Role userRole = roleRepository.findByName(RoleName.valueOf(signUpRequest.getRole().toUpperCase()))
+	               .orElseThrow(() -> new KarudaException("User Role not set."));
 
-		  //  existing.setRoles(Collections.singleton(userRole));
+		   existing.setRoles(Collections.singleton(userRole));*/
 			return userRepository.saveAndFlush(existing);
 		}
 		return null;

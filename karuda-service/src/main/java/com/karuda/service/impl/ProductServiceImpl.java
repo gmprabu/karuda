@@ -52,6 +52,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product updateProduct(Product product) {		
+		
+		UnitType type = unitRepository.findByType(product.getUnitType().getType())
+				.orElseThrow(() -> new KarudaException("unit type not set."));
+		product.setUnitType(type);
 		return  repository.save(product);
 	}
 

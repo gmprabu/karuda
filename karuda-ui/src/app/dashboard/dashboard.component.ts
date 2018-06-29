@@ -3,7 +3,7 @@ import { AuthService } from '../auth/auth.service';
 
 
 @Component({
-  selector: 'elb-dashboard',
+  selector: 'dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.karuda.domain.Product;
 import com.karuda.model.ApiResponse;
+import com.karuda.model.StockUpdateRequest;
 import com.karuda.service.ProductService;
 
 @RestController
@@ -58,5 +59,16 @@ public class ProductController {
 	public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
 		 service.removeProduct(id);
 		 return ResponseEntity.ok(new ApiResponse(true, "Product deleted successfully"));
+	}
+	
+	@PostMapping("/stockUpdate/{id}")
+	public ResponseEntity<ApiResponse> stockUpdateProduct(@PathVariable Long id,@RequestBody StockUpdateRequest product) {
+		
+		Product result =service.updateProductStock(product);
+		if (result != null) {
+			return ResponseEntity.ok(new ApiResponse(true, "Product stock updated successfully"));
+		} 
+		return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Unable to update product stock..!"),
+				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

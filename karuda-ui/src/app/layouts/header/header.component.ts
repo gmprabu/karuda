@@ -2,7 +2,7 @@ import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'elb-header',
+  selector: 'karuda-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private getPageTitle(routeSnapshot: ActivatedRouteSnapshot): string {
-    let title: string = (routeSnapshot.data && routeSnapshot.data['pageTitle']) ? routeSnapshot.data['pageTitle'] : 'elbDesktopApp';
+    let title: string = (routeSnapshot.data && routeSnapshot.data['pageTitle']) ? routeSnapshot.data['pageTitle'] : 'Karuda';
     if (routeSnapshot.firstChild) {
         title = this.getPageTitle(routeSnapshot.firstChild) || title;
     }

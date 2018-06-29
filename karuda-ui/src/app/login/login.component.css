@@ -5,7 +5,12 @@ mat-card {
   }
   .signin-content {
     padding: 60px 1rem;
+    background-color: #f5f5f5;
   }
   .full-width-input {
     width: 100%;
   }
+  mat-icon{
+    margin-top: 4%;
+  }
+  

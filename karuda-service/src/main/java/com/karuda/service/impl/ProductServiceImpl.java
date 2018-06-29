@@ -14,6 +14,7 @@ import com.karuda.domain.StockAudit;
 import com.karuda.domain.UnitType;
 import com.karuda.domain.UnitTypeName;
 import com.karuda.exception.KarudaException;
+import com.karuda.model.StockUpdateRequest;
 import com.karuda.repository.ProductRepository;
 import com.karuda.repository.StockAuditRepository;
 import com.karuda.repository.UnitsRepository;
@@ -44,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
 			product = repository.save(product);
 			
 			if(product != null) {
-				addStockAudit(product);
+				addStockAudit(product,product.getStock());
 			}
 		}
 		return product;
@@ -65,10 +66,10 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 	
-	private void addStockAudit(Product prod) {
+	private void addStockAudit(Product prod,int quantity) {
 		StockAudit audit = new StockAudit();
 		audit.setProduct(prod);
-		audit.setQuantity(prod.getStock());
+		audit.setQuantity(quantity);
 		auditRepo.save(audit);
 	}
 
@@ -98,6 +99,20 @@ public class ProductServiceImpl implements ProductService {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		return product;
+	}
+
+	@Override
+	public Product updateProductStock(StockUpdateRequest request) {
+		
+		Product product = repository.getOne(request.getId());
+		if(product != null) {
+			int stock = product.getStock();
+			stock = stock + request.getStock();
+			product.setStock(stock);
+			repository.save(product);
+			addStockAudit(product,request.getStock());
 		}
 		return product;
 	}

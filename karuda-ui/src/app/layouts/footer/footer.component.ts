@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'elb-footer',
+  selector: 'karuda-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })

@@ -7,6 +7,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ResolveUnits } from './pipe/unit.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import { StockModelComponent } from './stock-model/stock-model.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,9 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     ProductCardComponent,
     ProductFormComponent,
     ProductListComponent,
-    ResolveUnits
-  ]
+    ResolveUnits,
+    StockModelComponent
+  ],
+  entryComponents: [StockModelComponent]
 })
 export class ProductModule { }

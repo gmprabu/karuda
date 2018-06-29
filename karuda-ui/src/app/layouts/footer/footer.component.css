@@ -1,4 +1,8 @@
 .fixed-bottom{
     position: fixed;
-    bottom:0px;
+    bottom:0;
+}
+.footer{
+    height: 40px;
+    background-color: #efefef;
 }

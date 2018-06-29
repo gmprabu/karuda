@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 
 
 @Component({
-    selector: 'elb-main',
+    selector: 'karuda-main',
     templateUrl: './main.component.html',
     styleUrls: ['./main.component.css']
 })
@@ -17,7 +17,7 @@ export class JhiMainComponent implements OnInit {
     ) {}
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
-        let title: string = (routeSnapshot.data && routeSnapshot.data['pageTitle']) ? routeSnapshot.data['pageTitle'] : 'elbDesktopApp';
+        let title: string = (routeSnapshot.data && routeSnapshot.data['pageTitle']) ? routeSnapshot.data['pageTitle'] : 'Karuda';
         if (routeSnapshot.firstChild) {
             title = this.getPageTitle(routeSnapshot.firstChild) || title;
         }

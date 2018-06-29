@@ -4,6 +4,8 @@ import { ProductService } from './product.service';
 import { DialogsService } from '../../shared/dialogs.service';
 import { CommonService } from '../../shared/common.service';
 import { Product } from '../../model/product';
+import { MatDialog } from '@angular/material';
+import { StockModelComponent } from '../stock-model/stock-model.component';
 
 
 @Component({
@@ -15,7 +17,8 @@ import { Product } from '../../model/product';
 export class ProductListComponent implements OnInit {
 
   constructor(private router:Router, private productService:ProductService,
-    private dialogsService: DialogsService, private commonService:CommonService) { }
+    private dialogsService: DialogsService, private commonService:CommonService,
+    public dialog: MatDialog) { }
 
   products:Product[];
    
@@ -26,6 +29,7 @@ export class ProductListComponent implements OnInit {
 
   getAllProducts() {
     this.productService.getProducts().subscribe((data) => {
+      console.log(data);
       this.products = data;
     });
   }
@@ -38,7 +42,22 @@ export class ProductListComponent implements OnInit {
     this.router.navigateByUrl('/editProduct');
   }
   addStock(value){
-  
+    
+    const dialogRef = this.dialog.open(StockModelComponent, {
+      width: '450px',
+      data: value.inputs
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+     if(result != undefined && result !== "Cancel"){
+/*       const d: Date = new Date(result.date);
+      result.date = d.getTime; */
+      this.productService.stockUpdate(result).subscribe((data) => {
+          this.getAllProducts();
+      });
+     }
+    });
   }
   removeProduct(value){
     this.dialogsService

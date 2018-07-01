@@ -1,8 +1,9 @@
 package com.karuda.service.impl;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,10 +26,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	RoleRepository roleRepository;
-	
-    @Autowired
-    PasswordEncoder passwordEncoder;
-    
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 	@Override
 	public List<User> getAll() {
 		return userRepository.findAll();
@@ -36,26 +37,23 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User createUser(SignUpRequest signUpRequest) {
-		/*if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Username is already taken!"),
-                    HttpStatus.BAD_REQUEST);
-        }
+		/*
+		 * if(userRepository.existsByUsername(signUpRequest.getUsername())) { return new
+		 * ResponseEntity<ApiResponse>(new ApiResponse(false,
+		 * "Username is already taken!"), HttpStatus.BAD_REQUEST); }
+		 * 
+		 * if(userRepository.existsByEmail(signUpRequest.getEmail())) { return new
+		 * ResponseEntity<ApiResponse>(new ApiResponse(false,
+		 * "Email Address already in use!"), HttpStatus.BAD_REQUEST); }
+		 */
 
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Email Address already in use!"),
-                    HttpStatus.BAD_REQUEST);
-        }*/
-
-        // Creating user's account
-        User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
-                signUpRequest.getEmail(), signUpRequest.getPassword());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role userRole = roleRepository.findByName(RoleName.valueOf(signUpRequest.getRole().toUpperCase()))
-                .orElseThrow(() -> new KarudaException("User Role not set."));
-        user.setRoles(Collections.singleton(userRole));  
-        User result = userRepository.save(user);
-        
-        return result;
+		// Creating user's account
+		User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(),
+				signUpRequest.getPassword());
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		setRoles(user, signUpRequest);
+		User result = userRepository.save(user);
+		return result;
 
 	}
 
@@ -66,20 +64,28 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User updateUser(SignUpRequest signUpRequest) {
-		
+
 		Optional<User> user = userRepository.findById(signUpRequest.getId());
-		User existing =user.get();
-		if(existing != null) {
+		User existing = user.get();
+		if (existing != null) {
 			existing.setEmail(signUpRequest.getEmail());
 			existing.setUsername(signUpRequest.getUsername());
 			existing.setName(signUpRequest.getName());
-		 /*   Role userRole = roleRepository.findByName(RoleName.valueOf(signUpRequest.getRole().toUpperCase()))
-	               .orElseThrow(() -> new KarudaException("User Role not set."));
+			setRoles(existing, signUpRequest);
 
-		   existing.setRoles(Collections.singleton(userRole));*/
 			return userRepository.saveAndFlush(existing);
 		}
 		return null;
+	}
+
+	private void setRoles(User user, SignUpRequest signUpRequest) {
+
+		Role userRole = roleRepository.findByName(RoleName.valueOf(signUpRequest.getRole().toUpperCase()))
+                .orElseThrow(() -> new KarudaException("User Role not set."));
+		Set<Role> roles = new HashSet<Role>();
+		roles.add(userRole);
+		user.setRoles(roles);
+		
 	}
 
 }

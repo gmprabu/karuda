@@ -2,7 +2,7 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div fxLayout="row">
 
-      <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
+      <mat-card fxFlex="50%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
         <div fxFlex>
           <mat-form-field>
             <input matInput placeholder="Name" formControlName="name" required>
@@ -56,7 +56,7 @@
               {{role.name}}
             </mat-radio-button>
           </mat-radio-group>
-          <mat-error *ngIf="isFieldInvalid('role')">
+          <mat-error *ngIf="isFieldInvalid('role')" class="field-error">
             Role is required
           </mat-error>
         </div>
@@ -68,7 +68,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </mat-card>
     </div>
   </form>
 </div>

@@ -81,14 +81,7 @@ export class UserCreationComponent implements OnInit {
     }
   } 
   reset(){
-    this.form.patchValue({
-      name: undefined,
-      email: undefined,
-      username: undefined,
-      password:undefined,
-      confirmPassword:undefined,
-      role:undefined
-    });
+    this.form.reset();
   }
   onSubmit() {
     

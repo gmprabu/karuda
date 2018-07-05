@@ -47,3 +47,10 @@ html, body, app-root, mat-sidenav-container, .side {
 .delete {
    margin-left: 8%;
  }
+
+ .field-error{
+  font-weight: 400;
+  line-height: 1.125;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 75%;
+ }

@@ -81,14 +81,7 @@ export class ProductFormComponent implements OnInit {
     this.form.patchValue({ image : this.selectedFile.name });
   }
   reset(){
-    this.form.patchValue({
-      name: undefined,
-      description: undefined,
-      category : undefined,
-      stock: undefined,
-      unitType: undefined,
-      image: undefined,
-    });
+    this.form.reset();
     this.selectedFile = null;
   }
 

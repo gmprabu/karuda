@@ -32,6 +32,16 @@ public class UserController {
 	public List<User> getAll() {
 		return service.getAll();
 	}
+	
+	@GetMapping("/{username}")
+	public boolean checkUserNameExists(@PathVariable String username) {
+		return service.checkDuplicateUsername(username);
+	}
+	
+	@GetMapping("/email/{email}")
+	public boolean checkEmailExists(@PathVariable String email) {
+		return service.checkDuplicateEmail(email);
+	}
 
 	@PostMapping
 	public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from "@angular/forms";
+import { FormBuilder, Validators, FormGroup, FormControl } from "@angular/forms";
 import { UserListService } from '../user-list/user-list.service';
 import { Router } from '@angular/router';
 import { CommonService } from '../../shared/common.service';
@@ -20,7 +20,8 @@ export class UserCreationComponent implements OnInit {
     private userService: UserListService, private router: Router) { }
   user: User;
   formSubmitAttempt: boolean = false;
-
+  usernameExists: boolean = false;
+  emailExists: boolean = false;
   roles = [
     { name: 'User', key: 'USER' },
     { name: 'Admin', key: 'ADMIN' },
@@ -31,12 +32,14 @@ export class UserCreationComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       id: [''],
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      username: ['', Validators.required],
+      
+      name: new FormControl('', [Validators.required, Validators.maxLength(40),Validators.minLength(3)]),
+      email:new FormControl('', [Validators.required, Validators.email]),
+      username: new FormControl('', [Validators.required, 
+        Validators.maxLength(15),Validators.minLength(3),Validators.pattern('^[a-zA-Z0-9_]*$')]),
       role: ['', Validators.required],
-      password: ['',],
-      confirmPassword: ['',]
+      password: new FormControl(''),
+      confirmPassword: new FormControl('')
     },
       { validator: this.checkIfMatchingPasswords('password', 'confirmPassword') });
     this.setValues();
@@ -76,7 +79,7 @@ export class UserCreationComponent implements OnInit {
         role: this.user.roles[0].name,
       });
     } else {
-      this.form.get("password").setValidators(Validators.required);
+      this.form.get("password").setValidators([Validators.required,Validators.minLength(6)]);
       this.form.get("confirmPassword").setValidators(Validators.required);
     }
   }
@@ -85,7 +88,7 @@ export class UserCreationComponent implements OnInit {
   }
   onSubmit() {
 
-    if (this.form.valid) {
+    if (this.form.valid && !this.usernameExists &&  !this.emailExists) {
       this.commonService.startSpinner();
       if (this.editFlag) {
         this.userService.updateUser(this.form.value).subscribe(data => {
@@ -102,5 +105,33 @@ export class UserCreationComponent implements OnInit {
     }
     this.formSubmitAttempt = true;
   }
+
+  usernameChange(){
+   let name = this.form.value.username;
+   if(name && name.length > 3 ){
+    this.userService.checkUsernameDuplicate(name).subscribe(data => {
+      console.log(data);
+      if(data){
+        this.usernameExists = true;
+      }else{
+        this.usernameExists = false;
+      }
+    });
+   }
+  }
+
+  emailChange(){
+    let email = this.form.value.email;
+    if(email && this.form.get('email').valid ){
+     this.userService.checkEmailDuplicate(email).subscribe(data => {
+      console.log(data);
+       if(data){
+         this.emailExists = true;
+       }else{
+         this.emailExists = false;
+       }
+     });
+    }
+   }
 }
 

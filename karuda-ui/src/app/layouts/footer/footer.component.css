@@ -1,8 +1,9 @@
-.fixed-bottom{
-    position: fixed;
-    bottom:0;
-}
 .footer{
     height: 50px;
-    background-color: #efefef;
+    width: 100%;
+    background: #f7f7f7;
+    position: absolute;
+    bottom: 0;
+    color: black;
+    font-size: 12px;
 }

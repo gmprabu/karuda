@@ -8,6 +8,7 @@ import { ResolveUnits } from './pipe/unit.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { StockModelComponent } from './stock-model/stock-model.component';
+import { PriceListComponent } from './price-list/price-list.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { StockModelComponent } from './stock-model/stock-model.component';
     ProductFormComponent,
     ProductListComponent,
     ResolveUnits,
-    StockModelComponent
+    StockModelComponent,
+    PriceListComponent
   ],
   entryComponents: [StockModelComponent]
 })

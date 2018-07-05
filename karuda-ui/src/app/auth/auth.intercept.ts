@@ -1,13 +1,14 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpUserEvent, HttpEvent } from "@angular/common/http";
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpUserEvent, HttpEvent, HttpErrorResponse } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/do';
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { CommonService } from "../shared/common.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
    
-    constructor(private router: Router) { }
+    constructor(private router: Router,private commonService:CommonService) { }
     
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (req.headers.get('No-Auth') == "True")
@@ -23,6 +24,10 @@ export class AuthInterceptor implements HttpInterceptor {
                 err => {
                     if (err.status === 401)
                         this.router.navigateByUrl('/login');
+                    if (err instanceof HttpErrorResponse) {
+                           this.commonService.stopSpinner();
+                           this.commonService.showErrorNotification(err.message);
+                          }
                 }
                 );
         }

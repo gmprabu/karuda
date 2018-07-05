@@ -13,35 +13,27 @@ import { ToastrService, GlobalConfig } from 'ngx-toastr';
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css'],
-  providers :[UserListService]
+  providers: [UserListService]
 })
 export class UserListComponent implements OnInit {
 
-  constructor(private authService: AuthService, 
-    private dialog: MatDialog, 
-    private dialogsService: DialogsService,
-    private userService:UserListService,
-    private router:Router,
-    private commonService:CommonService,
-    private toastr: ToastrService,
-  ) {
-    this.options = this.toastr.toastrConfig;
-   }
-
-  displayedColumns = ['name', 'username', 'email','role', 'options'];
+  displayedColumns = ['name', 'username', 'email', 'role', 'options'];
   dataSource = new MatTableDataSource<User>();
   user = new User();
-  editFlag:boolean = false;
+  editFlag: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   options: GlobalConfig;
+  constructor(private authService: AuthService,
+    private dialog: MatDialog,
+    private dialogsService: DialogsService,
+    private userService: UserListService,
+    private router: Router,
+    private commonService: CommonService) {
+  }
   ngOnInit() {
-    this.options.closeButton = true;
-    this.options.positionClass = 'toast-top-full-width';
-    this.options.timeOut = 5000000;
     this.dataSource.paginator = this.paginator;
     this.commonService.startSpinner();
-    this. getAllUsers();
-    this.toastr.success('Hello world!', 'Toastr fun!', this.options);
+    this.getAllUsers();
   }
 
   getAllUsers() {
@@ -55,7 +47,7 @@ export class UserListComponent implements OnInit {
     this.commonService.setUser(user);
     this.router.navigateByUrl('/editUser');
   }
-  createUser(){
+  createUser() {
     this.commonService.setUser(null);
     this.router.navigateByUrl('/createUser');
   }
@@ -67,7 +59,8 @@ export class UserListComponent implements OnInit {
         if (res) {
           this.commonService.startSpinner();
           this.userService.removeUser(item).subscribe((data) => {
-            this.getAllUsers(); console.log('deleted successfully');
+            this.commonService.showSuccessNotification('User deleted successfully');
+            this.getAllUsers();
           });
         }
       });

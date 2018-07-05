@@ -13,6 +13,7 @@ import { ProductListComponent } from './product/product-list/product-list.compon
 import { ProductFormComponent } from './product/product-form/product-form.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserCreationComponent } from './user/user-creation/user-creation.component';
+import { PriceListComponent } from './product/price-list/price-list.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -24,6 +25,7 @@ const routes: Routes = [
     { path: 'editProduct', component: ProductFormComponent,canActivate:[AuthGuard], data: {pageTitle: 'Edit product'}},
     { path: 'createUser', component: UserCreationComponent, canActivate:[AuthGuard],data: {pageTitle: 'Create user'}},
     { path: 'editUser', component: UserCreationComponent, canActivate:[AuthGuard],data: {pageTitle: 'Edit user'}},
+    { path: 'priceList', component: PriceListComponent, canActivate:[AuthGuard],data: {pageTitle: 'Price list'}},
     ...errorRoute
 ];
 

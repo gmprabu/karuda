@@ -12,7 +12,7 @@ public class SignUpRequest {
 	private long id;
 	
     @NotBlank
-    @Size(min = 4, max = 40)
+    @Size(min = 3, max = 40)
     private String name;
 
     @NotBlank
@@ -20,7 +20,6 @@ public class SignUpRequest {
     private String username;
 
     @NotBlank
-    @Size(max = 40)
     @Email
     private String email;
 

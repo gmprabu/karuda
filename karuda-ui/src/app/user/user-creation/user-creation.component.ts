@@ -9,95 +9,98 @@ import { User } from '../../model/user';
   selector: 'app-user-creation',
   templateUrl: './user-creation.component.html',
   styleUrls: ['./user-creation.component.css'],
-  providers :[UserListService]
+  providers: [UserListService]
 })
 export class UserCreationComponent implements OnInit {
 
   form: FormGroup;
   description: string;
-  editFlag:boolean = false;
-  constructor(private fb: FormBuilder, private commonService:CommonService,
-    private userService:UserListService,  private router:Router) { }
-  user:User;
-  formSubmitAttempt:boolean = false; 
+  editFlag: boolean = false;
+  constructor(private fb: FormBuilder, private commonService: CommonService,
+    private userService: UserListService, private router: Router) { }
+  user: User;
+  formSubmitAttempt: boolean = false;
 
   roles = [
-    {name:'User',key:'USER'},
-    {name:'Admin',key: 'ADMIN'},
-    {name:'Super Admin', key:"SUPER_ADMIN" }
+    { name: 'User', key: 'USER' },
+    { name: 'Admin', key: 'ADMIN' },
+    { name: 'Super Admin', key: "SUPER_ADMIN" }
   ];
-     
+
 
   ngOnInit() {
     this.form = this.fb.group({
-      id:[''],
+      id: [''],
       name: ['', Validators.required],
       email: ['', Validators.required],
       username: ['', Validators.required],
       role: ['', Validators.required],
-      password: ['', ],
-      confirmPassword: ['', ]
+      password: ['',],
+      confirmPassword: ['',]
     },
-    {validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
+      { validator: this.checkIfMatchingPasswords('password', 'confirmPassword') });
     this.setValues();
   }
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
     return (group: FormGroup) => {
       let passwordInput = group.controls[passwordKey],
-          passwordConfirmationInput = group.controls[passwordConfirmationKey];
-      if (passwordInput.value !== passwordConfirmationInput.value &&  !this.editFlag) {
-        return passwordConfirmationInput.setErrors({notEquivalent: true})
+        passwordConfirmationInput = group.controls[passwordConfirmationKey];
+      if (passwordInput.value !== passwordConfirmationInput.value && !this.editFlag) {
+        return passwordConfirmationInput.setErrors({ notEquivalent: true })
       }
-      else if( (passwordConfirmationInput.value == '' || !passwordConfirmationInput.value) && !this.editFlag){
-        return passwordConfirmationInput.setErrors({required: true})
+      else if ((passwordConfirmationInput.value == '' || !passwordConfirmationInput.value) && !this.editFlag) {
+        return passwordConfirmationInput.setErrors({ required: true })
       }
-      else{
+      else {
         return passwordConfirmationInput.setErrors(null);
       }
     }
   }
 
-  isFieldInvalid(field: string) { 
+  isFieldInvalid(field: string) {
     return (
       (!this.form.get(field).valid && this.form.get(field).touched) ||
       (this.form.get(field).untouched && this.formSubmitAttempt && !this.form.value.role)
     );
   }
   public setValues() {
-    this.user =this.commonService.getUser();
-    if (this.user) {  
+    this.user = this.commonService.getUser();
+    if (this.user) {
       this.editFlag = true;
       console.log(this.user);
       this.form.patchValue({
-        id : this.user.id,
+        id: this.user.id,
         name: this.user.name,
         email: this.user.email,
         username: this.user.username,
-        role :this.user.roles[0].name,
+        role: this.user.roles[0].name,
       });
     } else {
-      this.form.get("password").setValidators(Validators.required); 
-      this.form.get("confirmPassword").setValidators(Validators.required); 
+      this.form.get("password").setValidators(Validators.required);
+      this.form.get("confirmPassword").setValidators(Validators.required);
     }
-  } 
-  reset(){
+  }
+  reset() {
     this.form.reset();
   }
   onSubmit() {
-    
+
     if (this.form.valid) {
-      if(this.editFlag){
+      this.commonService.startSpinner();
+      if (this.editFlag) {
         this.userService.updateUser(this.form.value).subscribe(data => {
+          this.commonService.stopSpinner();
           this.router.navigateByUrl('/users');
-        });  
+        });
       }
-      else{
+      else {
         this.userService.addUser(this.form.value).subscribe(data => {
+          this.commonService.stopSpinner();
           this.router.navigateByUrl('/users');
-        });  
-      }       
+        });
+      }
     }
-    this.formSubmitAttempt = true; 
+    this.formSubmitAttempt = true;
   }
 }
 

@@ -1,5 +1,6 @@
 import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { CommonService } from '../../shared/common.service';
 
 @Component({
   selector: 'karuda-header',
@@ -11,7 +12,7 @@ export class HeaderComponent implements OnInit {
   public navTitle: string;
 
   constructor(
-    private router: Router
+    private router: Router,private commonService: CommonService
   ) {}
 
   ngOnInit() {

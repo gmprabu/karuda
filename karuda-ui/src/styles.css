@@ -2,8 +2,7 @@
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~material-design-icons/iconfont/material-icons.css";
-
-
+@import "~ngx-toastr/toastr.css";
 
 html, body, app-root, mat-sidenav-container, .side {
     width: 100%;
@@ -25,10 +24,6 @@ html, body, app-root, mat-sidenav-container, .side {
     flex: 1 1 auto;
   }
   
-  .full-fill {
-    width: 100%;
-  }
-  
   .action-right {
     text-align: right;
     font-size: 13px;
@@ -39,7 +34,9 @@ html, body, app-root, mat-sidenav-container, .side {
 }
 
 .page-top-margin{
-  margin-top: 8%;
+  margin-top: 70px;
+  margin-right: 80px;
+  margin-left: 80px;
 }
 .cursor {
   cursor: pointer;

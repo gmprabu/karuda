@@ -3,6 +3,12 @@
     <div fxLayout="row">
 
       <mat-card fxFlex="50%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
+        <mat-card-header>
+          <mat-card-title>
+            <h2 *ngIf="!editFlag">Add user</h2>
+            <h2 *ngIf="editFlag">Edit user</h2>
+          </mat-card-title>
+        </mat-card-header>
         <div fxFlex>
           <mat-form-field>
             <input matInput placeholder="Name" formControlName="name" required>

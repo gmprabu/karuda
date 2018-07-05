@@ -3,7 +3,7 @@ mat-icon {
 }
 
 .user-card{
-    background: #464646;
+    background: #3f51b5;
     color: #FFFFFF;
 }
 
@@ -14,4 +14,7 @@ mat-icon {
 
 .align-center{
     text-align: center;
+}
+.mat-list-icon {
+    color: #3f51b5 ;
 }

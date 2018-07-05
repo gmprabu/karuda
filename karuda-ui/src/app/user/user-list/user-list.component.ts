@@ -7,7 +7,7 @@ import { AuthService } from '../../auth/auth.service';
 import { DialogsService } from '../../shared/dialogs.service';
 import { CommonService } from '../../shared/common.service';
 import { User } from '../../model/user';
-
+import { ToastrService, GlobalConfig } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-list',
@@ -22,23 +22,32 @@ export class UserListComponent implements OnInit {
     private dialogsService: DialogsService,
     private userService:UserListService,
     private router:Router,
-    private commonService:CommonService
-  ) { }
+    private commonService:CommonService,
+    private toastr: ToastrService,
+  ) {
+    this.options = this.toastr.toastrConfig;
+   }
 
   displayedColumns = ['name', 'username', 'email','role', 'options'];
   dataSource = new MatTableDataSource<User>();
   user = new User();
   editFlag:boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  
+  options: GlobalConfig;
   ngOnInit() {
+    this.options.closeButton = true;
+    this.options.positionClass = 'toast-top-full-width';
+    this.options.timeOut = 5000000;
     this.dataSource.paginator = this.paginator;
+    this.commonService.startSpinner();
     this. getAllUsers();
+    this.toastr.success('Hello world!', 'Toastr fun!', this.options);
   }
 
   getAllUsers() {
     this.userService.getUsers().subscribe((data) => {
-      this.dataSource = new MatTableDataSource<User>(data);;
+      this.dataSource = new MatTableDataSource<User>(data);
+      this.commonService.stopSpinner();
     });
   }
 
@@ -56,6 +65,7 @@ export class UserListComponent implements OnInit {
       .confirm('Confirm  delete', 'Are you sure to delete this user?')
       .subscribe((res) => {
         if (res) {
+          this.commonService.startSpinner();
           this.userService.removeUser(item).subscribe((data) => {
             this.getAllUsers(); console.log('deleted successfully');
           });

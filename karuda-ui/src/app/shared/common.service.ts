@@ -7,7 +7,8 @@ import { Product } from "../model/product";
 export class CommonService {
 
     private user: User;
-
+    overlay:boolean = false;
+    loggedIn:boolean = false;
     private product: Product;
 
     public setUser(user: User) {
@@ -24,5 +25,13 @@ export class CommonService {
 
     public getProduct(): Product {
         return this.product;
+    }
+
+    public startSpinner() {
+        this.overlay = true;
+    }
+
+    public stopSpinner() {
+        this.overlay = false;
     }
 }

@@ -18,6 +18,7 @@ import { CommonService } from './shared/common.service';
 import { AuthInterceptor } from './auth/auth.intercept';
 import { ProductModule } from './product/product.module';
 import { UserMangementModule } from './user/user.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { UserMangementModule } from './user/user.module';
     ReactiveFormsModule, 
     FlexLayoutModule,
     ProductModule,
-    UserMangementModule
+    UserMangementModule,
+    ToastrModule.forRoot()
   ],
   providers: [AuthGuard,RoleGuardService,AuthService,DialogsService,CommonService,
     {

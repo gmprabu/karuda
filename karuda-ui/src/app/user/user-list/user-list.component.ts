@@ -7,38 +7,39 @@ import { AuthService } from '../../auth/auth.service';
 import { DialogsService } from '../../shared/dialogs.service';
 import { CommonService } from '../../shared/common.service';
 import { User } from '../../model/user';
-
+import { ToastrService, GlobalConfig } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css'],
-  providers :[UserListService]
+  providers: [UserListService]
 })
 export class UserListComponent implements OnInit {
 
-  constructor(private authService: AuthService, 
-    private dialog: MatDialog, 
-    private dialogsService: DialogsService,
-    private userService:UserListService,
-    private router:Router,
-    private commonService:CommonService
-  ) { }
-
-  displayedColumns = ['name', 'username', 'email','role', 'options'];
+  displayedColumns = ['name', 'username', 'email', 'role', 'options'];
   dataSource = new MatTableDataSource<User>();
   user = new User();
-  editFlag:boolean = false;
+  editFlag: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  
+  options: GlobalConfig;
+  constructor(private authService: AuthService,
+    private dialog: MatDialog,
+    private dialogsService: DialogsService,
+    private userService: UserListService,
+    private router: Router,
+    private commonService: CommonService) {
+  }
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
-    this. getAllUsers();
+    this.commonService.startSpinner();
+    this.getAllUsers();
   }
 
   getAllUsers() {
     this.userService.getUsers().subscribe((data) => {
-      this.dataSource = new MatTableDataSource<User>(data);;
+      this.dataSource = new MatTableDataSource<User>(data);
+      this.commonService.stopSpinner();
     });
   }
 
@@ -46,7 +47,7 @@ export class UserListComponent implements OnInit {
     this.commonService.setUser(user);
     this.router.navigateByUrl('/editUser');
   }
-  createUser(){
+  createUser() {
     this.commonService.setUser(null);
     this.router.navigateByUrl('/createUser');
   }
@@ -56,8 +57,10 @@ export class UserListComponent implements OnInit {
       .confirm('Confirm  delete', 'Are you sure to delete this user?')
       .subscribe((res) => {
         if (res) {
+          this.commonService.startSpinner();
           this.userService.removeUser(item).subscribe((data) => {
-            this.getAllUsers(); console.log('deleted successfully');
+            this.commonService.showSuccessNotification('User deleted successfully');
+            this.getAllUsers();
           });
         }
       });

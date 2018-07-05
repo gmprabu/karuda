@@ -37,17 +37,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User createUser(SignUpRequest signUpRequest) {
-		/*
-		 * if(userRepository.existsByUsername(signUpRequest.getUsername())) { return new
-		 * ResponseEntity<ApiResponse>(new ApiResponse(false,
-		 * "Username is already taken!"), HttpStatus.BAD_REQUEST); }
-		 * 
-		 * if(userRepository.existsByEmail(signUpRequest.getEmail())) { return new
-		 * ResponseEntity<ApiResponse>(new ApiResponse(false,
-		 * "Email Address already in use!"), HttpStatus.BAD_REQUEST); }
-		 */
-
-		// Creating user's account
 		User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(),
 				signUpRequest.getPassword());
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -86,6 +75,16 @@ public class UserServiceImpl implements UserService {
 		roles.add(userRole);
 		user.setRoles(roles);
 		
+	}
+
+	@Override
+	public boolean checkDuplicateUsername(String name) {
+		return  userRepository.existsByUsername(name);
+	}
+
+	@Override
+	public boolean checkDuplicateEmail(String email) {
+		return userRepository.existsByEmail(email);
 	}
 
 }

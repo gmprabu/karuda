@@ -1,8 +1,14 @@
-<div class="page-top-margin">
+<div class="page-top-margin test">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div fxLayout="row">
 
-      <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
+      <mat-card fxFlex="50%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
+        <mat-card-header>
+          <mat-card-title>
+            <h2 *ngIf="!editFlag">Add product</h2>
+            <h2 *ngIf="editFlag">Edit product</h2>
+          </mat-card-title>
+        </mat-card-header>
         <div fxFlex>
           <mat-form-field>
             <input matInput placeholder="Name" formControlName="name" required>
@@ -18,7 +24,7 @@
               Description is required
             </mat-error>
             <mat-error *ngIf="form.get('description').hasError('maxlength')">
-                Description can be max 200 characters
+              Description can be max 200 characters
             </mat-error>
           </mat-form-field>
         </div>
@@ -43,7 +49,7 @@
               {{unit.name}}
             </mat-radio-button>
           </mat-radio-group>
-          <mat-error *ngIf="isFieldInvalid('unitType')">
+          <mat-error *ngIf="isFieldInvalid('unitType')" class="field-error">
             Unit type is required
           </mat-error>
         </div>
@@ -83,7 +89,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </mat-card>
     </div>
   </form>
 </div>

@@ -23,15 +23,17 @@ export class ProductListComponent implements OnInit {
   products:Product[];
    
   ngOnInit() {
+    this.commonService.startSpinner();
     this. getAllProducts();
     this.commonService.setProduct(null);
   }
 
   getAllProducts() {
     this.productService.getProducts().subscribe((data) => {
-      console.log(data);
       this.products = data;
+      this.commonService.stopSpinner();
     });
+    
   }
   openAddProduct(){
     this.router.navigateByUrl('/addProduct');
@@ -49,10 +51,10 @@ export class ProductListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
      if(result != undefined && result !== "Cancel"){
 /*       const d: Date = new Date(result.date);
       result.date = d.getTime; */
+      this.commonService.startSpinner();
       this.productService.stockUpdate(result).subscribe((data) => {
           this.getAllProducts();
       });
@@ -64,6 +66,7 @@ export class ProductListComponent implements OnInit {
     .confirm('Confirm  delete', 'Are you sure to delete this product?')
     .subscribe((res) => {
       if (res) {
+        this.commonService.stopSpinner();
         this.productService.removeProduct(value.inputs).subscribe((data) => {
           this.getAllProducts();
         });

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { CommonService } from '../../shared/common.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class JhiMainComponent implements OnInit {
     constructor(
         private titleService: Title,
         private router: Router,
-
+        private api: CommonService
     ) {}
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
@@ -25,7 +26,7 @@ export class JhiMainComponent implements OnInit {
     }
 
     ngOnInit() {
-       // this.api.overlay = false;
+        this.api.overlay = false;
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 this.titleService.setTitle(this.getPageTitle(this.router.routerState.snapshot.root));

@@ -1,16 +1,16 @@
 <div class="page-top-margin">
-
-  
-<div fxLayout="row" fxLayoutAlign="space-around center" class="margin-bottom20">
-    <div fxFlex></div>
-    <div fxLayout="row"  fxLayoutAlign="right" class="add-product">
-        <span fxFlex>
-            <button mat-raised-button color="primary" (click)="openAddProduct()">Add product</button>
-        </span>
+    <div fxLayout="row" fxLayoutAlign="space-around center" class="margin-bottom20">
+        <div fxFlex>
+            <h2>Products </h2>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="right" class="add-product">
+            <span fxFlex>
+                <button mat-raised-button color="primary" (click)="openAddProduct()">Add product</button>
+            </span>
+        </div>
     </div>
-</div>
-<div fxLayout="row wrap"  fxLayout.lt-md="column wrap" fxLayoutGap="2%">
-  <app-product *ngFor="let product of products" [product]="product" 
-  (edit)="editProduct($event)" (remove)="removeProduct($event)"  (stockUpdate)="addStock($event)"
-  class="card-item" fxFlex="30%;" fxFlex.lt-md="50%" fxFlex.xs="80%"></app-product>  
+    <div fxLayout="row wrap" fxLayout.lt-md="column wrap" fxLayoutGap="2%">
+        <app-product *ngFor="let product of products" [product]="product" (edit)="editProduct($event)" (remove)="removeProduct($event)"
+            (stockUpdate)="addStock($event)" class="card-item" fxFlex="30%;" fxFlex.lt-md="50%" fxFlex.xs="80%"></app-product>
+    </div>
 </div>

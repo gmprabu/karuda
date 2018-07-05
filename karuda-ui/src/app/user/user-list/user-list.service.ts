@@ -28,4 +28,12 @@ export class UserListService {
     return this.http.delete('/api/users/' + user.id );
   }
 
+  checkUsernameDuplicate(name: String): Observable<any> {
+    return this.http.get('/api/users/' + name);
+  }
+
+  checkEmailDuplicate(email: String): Observable<any> {
+    return this.http.get('/api/users/email/' + email );
+  }
+
 }

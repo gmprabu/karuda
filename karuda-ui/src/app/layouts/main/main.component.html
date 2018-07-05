@@ -8,7 +8,9 @@
             <karuda-header (toggle)="sidenav.toggle()" (navTitle)="navTitle"></karuda-header>
         </header>
         <main class="main-class">
-           <!--  <div id="overlayDiv" *ngIf="api.overlay" class="container-fluid"></div> -->
+            <div id="overlayDiv" *ngIf="api.overlay" class="container-fluid">
+                    <mat-spinner></mat-spinner>
+            </div> 
             <router-outlet></router-outlet>
         </main>
         </div>

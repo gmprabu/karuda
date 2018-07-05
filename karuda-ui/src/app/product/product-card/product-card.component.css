@@ -1,5 +1,3 @@
-
-
 .mat-card{
   background-color: #0000000d;
 }
@@ -21,4 +19,11 @@ mat-card img{
 .add-stock{
   margin-right: 5% !important;
   font-size: 12px;
+}
+
+.mat-icon {
+  color: #3f51b5 ;
+}
+.delete {
+  margin-left: 4%;
 }

@@ -14,4 +14,8 @@ public interface UserService {
 	User updateUser(SignUpRequest signUpRequest);
 
 	void delete(Long id);
+	
+	boolean checkDuplicateUsername(String name);
+	
+	boolean checkDuplicateEmail(String email);
 }

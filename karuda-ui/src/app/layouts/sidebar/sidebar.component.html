@@ -2,8 +2,8 @@
   <i class="material-icons" id="close" (click)="onNavClick()">close</i>
   <mat-card-content class="align-center">
       <i class="material-icons account-icon">account_circle</i>
-      <h2 class="md-title margin-bottom-0">John Smith</h2>
-      <h4 class="md-title margin-top-0">Maintenance</h4>
+      <h2 class="md-title margin-bottom-0">Saravanan</h2>
+      <h4 class="md-title margin-top-0">Admin</h4>
   </mat-card-content>
 </mat-card>
 <mat-nav-list>
@@ -15,7 +15,7 @@
     <i mat-list-icon class="material-icons">apps</i>
     <span matLine>Product management</span>
   </mat-list-item>
-  <mat-list-item id="description" (click)="onNavClick()">
+  <mat-list-item id="price_management" [routerLink]="['./priceList']"  (click)="onNavClick()">
     <i mat-list-icon class="material-icons">attach_money</i>
     <span matLine>Price management</span>
   </mat-list-item>

@@ -10,7 +10,7 @@
 
 .file-icon{
     cursor: pointer;
-    color: #673ab7;
+    color:  #3f51b5;
     margin-top: 39%;
     font-size: 35px;
 }
@@ -25,9 +25,9 @@
   }
 
   ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: #673ab7 !important;
+    border-color:  #3f51b5  !important;
 }
 
 ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color:#673ab7 !important;
+    background-color: #3f51b5 !important;
 }

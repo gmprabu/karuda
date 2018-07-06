@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
       this.api.startSpinner();
       this.authService.login(this.form.value).subscribe((data: any) => {
         this.authService.setSession(data);
-        this.api.loggedIn = true;
         this.router.navigate(['/home']);
         this.api.stopSpinner();
       },

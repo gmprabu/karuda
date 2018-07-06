@@ -1,5 +1,6 @@
 import { UnitType } from "./unitType";
 import { BaseModel } from "./BaseModel";
+import { Price } from "./price";
 
 export class Product extends BaseModel{
     id?:number;
@@ -9,4 +10,5 @@ export class Product extends BaseModel{
     stock:number;
     unitType:UnitType;
     image:Blob;
+    price:Price[];
 }

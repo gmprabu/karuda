@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { User } from "../model/user";
 import { Product } from "../model/product";
 import { ToastrService, GlobalConfig } from "ngx-toastr";
+import { AuthService } from "../auth/auth.service";
 
 
 @Injectable()
@@ -9,11 +10,11 @@ export class CommonService {
 
     private user: User;
     overlay:boolean = false;
-    loggedIn:boolean = false;
+    loggedIn:boolean = this.auth.isLoggedIn();
     private product: Product;
     options: GlobalConfig;
 
-    constructor(private toastr: ToastrService){
+    constructor(private toastr: ToastrService,private auth : AuthService){
         this.options = this.toastr.toastrConfig;
         this.options.closeButton = true;
         this.options.positionClass = 'toast-top-full-width';

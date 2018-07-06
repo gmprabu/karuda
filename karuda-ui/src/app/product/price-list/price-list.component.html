@@ -1,3 +1,42 @@
 <div class="page-top-margin">
-  price-list works!
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let product of products">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <strong>{{product.name}}</strong>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{product.category}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <span *ngIf="product.price.length == 0">
+        Price list is not defined.
+        <span (click)="definePrice(product)" class="cursor theme-color">
+          <strong>Do you want to define now?
+          </strong>
+        </span>
+      </span>
+      <div fxLayout="row" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="left" *ngFor="let price of product.price; index as i;">
+        <mat-form-field>
+          <input matInput placeholder="Quantity" type="number">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Unit type" required>
+            <mat-option *ngFor="let unit of getUnitType(product.unitType.type)" [value]="unit.key">
+              {{ unit.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Price" type="number">
+        </mat-form-field>
+        <mat-icon *ngIf="i == product.price.length - 1" class="cursor theme-color add-icon" (click)="definePrice(product)">
+          add</mat-icon>
+      </div>
+      <button  class="mat-raised-button mat-primary save">
+          Save
+        </button>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

@@ -1,63 +1,57 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../product-list/product.service';
 import { CommonService } from '../../shared/common.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatPaginator } from '@angular/material';
 import { DialogsService } from '../../shared/dialogs.service';
 import { Product } from '../../model/product';
 import { Price } from '../../model/price';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-price-list',
   templateUrl: './price-list.component.html',
   styleUrls: ['./price-list.component.css'],
-  providers:[ProductService]
+  providers: [ProductService]
 })
 export class PriceListComponent implements OnInit {
-  
-  constructor(private router:Router, private productService:ProductService,
-    private dialogsService: DialogsService, private commonService:CommonService,
-    public dialog: MatDialog) { }
 
-  products:Product[];
+  constructor(private router: Router, private productService: ProductService,
+    private dialogsService: DialogsService, private commonService: CommonService,
+    public dialog: MatDialog, private fb: FormBuilder) { }
 
-  prices:Price[];
-   
-  unitsLiquid = [
-    { name: 'Milliliter', key: 'ml' },
-    { name: 'Litter', key: 'l' }
-  ];
+  products: Product[];
 
-  unitsSolid = [
-    { name: 'Gram', key: 'g' },
-    { name: 'Kilogram', key: 'kg' }
-  ];
-
+  firstTime:boolean = false;
+  prices: Price[];
+  displayedColumns = ['quantity', 'price', 'options'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource = new MatTableDataSource<Price>();
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
     this.commonService.startSpinner();
-    this. getAllProducts();
+    this.getAllProducts();
     this.commonService.setProduct(null);
   }
 
   getAllProducts() {
     this.productService.getProducts().subscribe((data) => {
       this.products = data;
+     
       this.commonService.stopSpinner();
     });
-    
+
   }
 
-  getUnitType(type:String){
-
-    if(type == "KGS"){
-      return this.unitsSolid;
-    }else if(type == "LTR"){
-      return this.unitsLiquid;
-    }
-  }
-
-  definePrice(product : Product){
+  definePrice(product: Product) {
     product.price.push(new Price());
+    this.firstTime = true;
   }
+
+  open(product:Product){
+    this.dataSource = new MatTableDataSource<Price>(product.price);
+  }
+
+
 }

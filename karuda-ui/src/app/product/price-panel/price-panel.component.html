@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="savePrices()">
+    <div fxLayout="row" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="left" *ngFor="let price of product.price; index as i;">
+      <mat-form-field>
+        <input matInput placeholder="Quantity" type="number" [formControlName]="getControlname('quantity',i)">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Unit type" required [formControlName]="getControlname('unitType',i)">
+          <mat-option *ngFor="let unit of getUnitType(product.unitType.type)" [value]="unit.key">
+            {{ unit.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Price" type="number" [formControlName]="getControlname('price',i)">
+      </mat-form-field>
+      <mat-icon *ngIf="i == product.price.length - 1" class="cursor theme-color add-icon" (click)="definePrice(product)">
+        add</mat-icon>
+        <mat-icon *ngIf="i != product.price.length - 1" class="cursor theme-color add-icon" (click)="removePrice(product,i)">
+        remove</mat-icon>
+        
+    </div>
+    <button type="submit" class="mat-raised-button mat-primary save">
+      Save
+    </button>
+  </form>

@@ -5,4 +5,12 @@ export class Price extends BaseModel{
     quantity:number;
     unitType:string;
     price?:number;
+
+/* 
+    constructor(quantity,unitType,price){
+        super();
+        this.quantity= quantity;
+        this.unitType = unitType;
+        this.price = price;
+    } */
 }

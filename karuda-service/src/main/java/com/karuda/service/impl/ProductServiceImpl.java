@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	private void addStockAudit(Product prod,int quantity) {
 		StockAudit audit = new StockAudit();
-		audit.setProduct(prod);
+		audit.setProductName(prod.getName());
 		audit.setQuantity(quantity);
 		auditRepo.save(audit);
 	}

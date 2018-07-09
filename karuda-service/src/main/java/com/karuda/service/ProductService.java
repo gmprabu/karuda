@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.karuda.domain.Price;
 import com.karuda.domain.Product;
 import com.karuda.model.StockUpdateRequest;
 
@@ -18,5 +19,9 @@ public interface ProductService {
 	void removeProduct(Long id);
 
 	Product updateProductStock(StockUpdateRequest product);
+
+	void removePrice(Long id);
+
+	Price updatePrice(Price price);
 
 }

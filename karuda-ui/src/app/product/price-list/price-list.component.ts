@@ -22,35 +22,114 @@ export class PriceListComponent implements OnInit {
 
   products: Product[];
 
-  firstTime:boolean = false;
+  firstTime: boolean = false;
   prices: Price[];
+  editFlag: boolean = false;
   displayedColumns = ['quantity', 'price', 'options'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource = new MatTableDataSource<Price>();
+  priceForm: FormGroup;
+
+  unitsLiquid = [
+    { name: 'Milliliter', key: 'ml' },
+    { name: 'Litter', key: 'l' }
+  ];
+  unitsSolid = [
+    { name: 'Gram', key: 'g' },
+    { name: 'Kilogram', key: 'kg' }
+  ];
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.commonService.startSpinner();
     this.getAllProducts();
     this.commonService.setProduct(null);
+
+    this.priceForm = this.fb.group({
+      id:[],
+      quantity: ['', Validators.required],
+      price: ['', Validators.required],
+      unitType: ['', Validators.required],
+    });
   }
 
+  getUnitType(type: String) {
+    if (type == "KGS") {
+      return this.unitsSolid;
+    } else if (type == "LTR") {
+      return this.unitsLiquid;
+    }
+  }
   getAllProducts() {
     this.productService.getProducts().subscribe((data) => {
       this.products = data;
-     
       this.commonService.stopSpinner();
     });
 
   }
 
   definePrice(product: Product) {
-    product.price.push(new Price());
     this.firstTime = true;
   }
+  editPrice(price: Price) {
+    this.editFlag = true;
+    this.priceForm.patchValue({
+      id: price.id,
+      quantity: price.quantity,
+      price: price.price,
+      unitType: price.unitType
+    });
+  }
 
-  open(product:Product){
+  open(product: Product) {
+    this.firstTime = false;
+    this.editFlag = false;
+    this.priceForm.reset();
     this.dataSource = new MatTableDataSource<Price>(product.price);
+  }
+  savePrices(product: Product) {
+    if (this.priceForm.valid) {
+      if (this.editFlag) {
+        product.price.forEach((item, index) => {
+          if(item.id == this.priceForm.value.id){
+            item.price = this.priceForm.value.price;
+            item.quantity = this.priceForm.value.quantity;
+            item.unitType = this.priceForm.value.unitType;
+          }
+        }); 
+      } else {
+        let prices: Price[] = [];
+        this.commonService.startSpinner();
+        let price = new Price();
+        price.quantity = this.priceForm.value['quantity'];
+        price.unitType = this.priceForm.value['unitType'];
+        price.price = this.priceForm.value['price'];
+        product.price.push(price);
+      }
+      this.productService.updateProduct(product).subscribe(data => {
+        if(this.editFlag){
+          this.commonService.showSuccessNotification("Price updated successfully");
+        }else{
+          this.commonService.showSuccessNotification("Price added successfully");
+        }
+       
+        this.getAllProducts();
+      });
+    }
+  }
+
+  deletePrice(item: Price, product: Product) {
+    this.dialogsService
+      .confirm('Confirm  delete', 'Are you sure to delete this price?')
+      .subscribe((res) => {
+        if (res) {
+          this.commonService.startSpinner();
+          this.productService.priceDelete(item).subscribe(data => {
+            this.commonService.showSuccessNotification(data.message);
+            this.getAllProducts();
+          });
+        }
+      });
   }
 
 

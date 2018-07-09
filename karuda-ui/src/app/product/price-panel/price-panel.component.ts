@@ -61,7 +61,6 @@ export class PricePanelComponent implements OnInit {
   savePrices() {
     if (this.priceForm.valid) {
       let prices: Price[] = [];
-      console.log(this.priceForm.value);
      this.commonService.startSpinner();
      this.priceForm.value.pricelist.forEach((item, index) => {
         let price = new Price();

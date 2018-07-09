@@ -1,13 +1,20 @@
 package com.karuda.domain;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.karuda.domain.audit.UserAudit;
 
@@ -41,5 +48,9 @@ public class Product extends UserAudit {
 	
 	@ManyToOne()
 	UnitType unitType;
+	
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	@JoinColumn(name="product_id", nullable=false)
+	private Set<Price> price = new HashSet<>();
 	
 }

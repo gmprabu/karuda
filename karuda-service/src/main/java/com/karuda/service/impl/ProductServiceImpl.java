@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.karuda.domain.Price;
 import com.karuda.domain.Product;
 import com.karuda.domain.StockAudit;
 import com.karuda.domain.UnitType;
 import com.karuda.domain.UnitTypeName;
 import com.karuda.exception.KarudaException;
 import com.karuda.model.StockUpdateRequest;
+import com.karuda.repository.PriceRepository;
 import com.karuda.repository.ProductRepository;
 import com.karuda.repository.StockAuditRepository;
 import com.karuda.repository.UnitsRepository;
@@ -31,6 +33,10 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	StockAuditRepository auditRepo;
+	
+	@Autowired
+	PriceRepository priceRepo;
+	
 
 	@Override
 	public List<Product> getProducts() {
@@ -63,12 +69,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void removeProduct(Long id) {
 		repository.deleteById(id);
-
 	}
 	
 	private void addStockAudit(Product prod,int quantity) {
 		StockAudit audit = new StockAudit();
-		audit.setProduct(prod);
+		audit.setProductName(prod.getName());
 		audit.setQuantity(quantity);
 		auditRepo.save(audit);
 	}
@@ -115,5 +120,15 @@ public class ProductServiceImpl implements ProductService {
 			addStockAudit(product,request.getStock());
 		}
 		return product;
+	}
+
+	@Override
+	public void removePrice(Long id) {
+		priceRepo.deleteById(id);
+	}
+
+	@Override
+	public Price updatePrice(Price price) {
+		return priceRepo.save(price);
 	}
 }

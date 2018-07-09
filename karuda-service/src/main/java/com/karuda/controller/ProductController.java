@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.karuda.domain.Price;
 import com.karuda.domain.Product;
 import com.karuda.model.ApiResponse;
 import com.karuda.model.StockUpdateRequest;
@@ -71,4 +72,22 @@ public class ProductController {
 		return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Unable to update product stock..!"),
 				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@DeleteMapping("/price/{id}")
+	public ResponseEntity<ApiResponse> deletePrice(@PathVariable Long id) {
+		 service.removePrice(id);
+		 return ResponseEntity.ok(new ApiResponse(true, "Price deleted successfully"));
+	}
+	
+	@PutMapping("/price")
+	public ResponseEntity<ApiResponse> updatePrice(@RequestBody Price price) {
+		
+		Price result =service.updatePrice(price);
+		if (result != null) {
+			return ResponseEntity.ok(new ApiResponse(true, "Price updated successfully"));
+		} 
+		return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Unable to update price..!"),
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
 }

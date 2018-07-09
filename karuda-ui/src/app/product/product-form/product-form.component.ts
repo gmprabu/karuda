@@ -106,6 +106,7 @@ export class ProductFormComponent implements OnInit {
     this.product.unitType = unit;
     this.productService.updateProduct(this.product).subscribe(data => {
       this.commonService.stopSpinner();
+      this.commonService.showSuccessNotification(data.message);
       this.router.navigateByUrl('/products');
     });
   }
@@ -125,6 +126,7 @@ export class ProductFormComponent implements OnInit {
     formdata.append('product', JSON.stringify(myObj));
     this.productService.addProduct(formdata).subscribe(data => {
       this.commonService.stopSpinner();
+      this.commonService.showSuccessNotification(data.message);
       this.router.navigateByUrl('/products');
     });
   }

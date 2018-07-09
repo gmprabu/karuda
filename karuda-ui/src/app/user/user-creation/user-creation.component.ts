@@ -93,12 +93,14 @@ export class UserCreationComponent implements OnInit {
       if (this.editFlag) {
         this.userService.updateUser(this.form.value).subscribe(data => {
           this.commonService.stopSpinner();
+          this.commonService.showSuccessNotification(data.message);
           this.router.navigateByUrl('/users');
         });
       }
       else {
         this.userService.addUser(this.form.value).subscribe(data => {
           this.commonService.stopSpinner();
+          this.commonService.showSuccessNotification(data.message);
           this.router.navigateByUrl('/users');
         });
       }

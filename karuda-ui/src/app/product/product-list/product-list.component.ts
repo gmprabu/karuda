@@ -56,6 +56,7 @@ export class ProductListComponent implements OnInit {
       result.date = d.getTime; */
       this.commonService.startSpinner();
       this.productService.stockUpdate(result).subscribe((data) => {
+        this.commonService.showSuccessNotification(data.message);
           this.getAllProducts();
       });
      }
@@ -68,6 +69,7 @@ export class ProductListComponent implements OnInit {
       if (res) {
         this.commonService.stopSpinner();
         this.productService.removeProduct(value.inputs).subscribe((data) => {
+          this.commonService.showSuccessNotification(data.message);
           this.getAllProducts();
         });
       }

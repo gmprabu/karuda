@@ -37,8 +37,8 @@
         <ng-container matColumnDef="options">
             <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
             <mat-cell *matCellDef="let user">
-                <mat-icon class="cursor " (click)="editUser(user)">mode_edit</mat-icon>
-                <mat-icon class="cursor delete" (click)="delete(user)">delete</mat-icon>
+                <mat-icon class="cursor theme-color " (click)="editUser(user)">mode_edit</mat-icon>
+                <mat-icon class="cursor delete theme-color" (click)="delete(user)">delete</mat-icon>
             </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -1,3 +1,76 @@
 <div class="page-top-margin">
-  price-list works!
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let product of products; index as productIndex;" (opened)="open(product)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <strong>{{product.name}}</strong>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{product.category}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <span *ngIf="product.price.length == 0">
+        Price list is not defined.
+        <span (click)="definePrice(product)" class="cursor theme-color">
+          <strong>Do you want to define now?
+          </strong>
+        </span>
+      </span>
+      <div *ngIf="product.price.length == 0 && firstTime">
+        <app-price-panel [product]="product"></app-price-panel>
+      </div>
+      <div fxLayout="row" fxLayoutWrap fxLayoutGap="5%" fxLayoutAlign="left" *ngIf="product.price.length != 0 && !firstTime">
+        <div fxFlex="50%">
+          <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="quantity">
+              <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+              <mat-cell *matCellDef="let price"> {{price.quantity}} {{price.unitType}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="price">
+              <mat-header-cell *matHeaderCellDef> Price(INR) </mat-header-cell>
+              <mat-cell *matCellDef="let price"> {{price.price}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="options">
+              <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+              <mat-cell *matCellDef="let price">
+                <mat-icon class="cursor theme-color " (click)="editPrice(price)">mode_edit</mat-icon>
+                <mat-icon class="cursor delete theme-color" (click)="deletePrice(price,product)">delete</mat-icon>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+        <div fxFlex="50%">
+          <h4 *ngIf="!editFlag">Add price</h4>
+          <h4 *ngIf="editFlag">Edit price</h4>
+          <form [formGroup]="priceForm" (ngSubmit)="savePrices(product)">
+            <div fxLayout="row" fxLayoutGap="3%">
+              <mat-form-field>
+                <input matInput placeholder="Quantity" type="number" formControlName="quantity">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-select placeholder="Unit type" required formControlName="unitType">
+                  <mat-option *ngFor="let unit of getUnitType(product.unitType.type)" [value]="unit.key">
+                    {{ unit.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Price" type="number" formControlName="price">
+              </mat-form-field>
+            </div>
+            <button *ngIf="!editFlag" type="submit" class="mat-raised-button mat-primary save">
+              Save
+            </button>
+            <button *ngIf="editFlag" type="submit" class="mat-raised-button mat-primary save">
+              Update
+            </button>
+          </form>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

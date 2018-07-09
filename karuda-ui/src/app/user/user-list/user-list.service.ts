@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../../model/user';
+import { ApiResponse } from '../../model/api.response';
 
 
 @Injectable()
@@ -13,19 +14,19 @@ export class UserListService {
     return this.http.get<User[]>('/api/users');
   }
 
-  addUser(user: User): Observable<User> {
-    return this.http.post<User>('/api/users', user).catch((err) => {
+  addUser(user: User): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>('/api/users', user).catch((err) => {
       console.log(err);
       return Observable.throw(err);
     });
   }
 
-  updateUser(user: User): Observable<User> {
-    return this.http.put<User>('/api/users/', user);
+  updateUser(user: User): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>('/api/users/', user);
   }
 
-  removeUser(user: User): Observable<any> {
-    return this.http.delete('/api/users/' + user.id );
+  removeUser(user: User): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>('/api/users/' + user.id );
   }
 
   checkUsernameDuplicate(name: String): Observable<any> {

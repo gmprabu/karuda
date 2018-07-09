@@ -1,25 +1,29 @@
-<form [formGroup]="form" (ngSubmit)="savePrices()">
-    <div fxLayout="row" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="left" *ngFor="let price of product.price; index as i;">
+ <form [formGroup]="priceForm" (ngSubmit)="savePrices()">
+
+  <div formArrayName="pricelist">
+    <div fxLayout="row" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="left" 
+    *ngFor="let invoiceparticular of priceForm.controls.pricelist.controls; let idx = index"
+      [formGroupName]="idx">
       <mat-form-field>
-        <input matInput placeholder="Quantity" type="number" [formControlName]="getControlname('quantity',i)">
+        <input matInput placeholder="Quantity" type="number" formControlName="quantity">
       </mat-form-field>
       <mat-form-field>
-        <mat-select placeholder="Unit type" required [formControlName]="getControlname('unitType',i)">
+        <mat-select placeholder="Unit type" required formControlName="unitType">
           <mat-option *ngFor="let unit of getUnitType(product.unitType.type)" [value]="unit.key">
             {{ unit.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Price" type="number" [formControlName]="getControlname('price',i)">
+        <input matInput placeholder="Price" type="number" formControlName="price">
       </mat-form-field>
-      <mat-icon *ngIf="i == product.price.length - 1" class="cursor theme-color add-icon" (click)="definePrice(product)">
+      <mat-icon *ngIf="idx == priceForm.controls.pricelist.controls.length - 1" class="cursor theme-color add-icon" (click)="addPrice()">
         add</mat-icon>
-        <mat-icon *ngIf="i != product.price.length - 1" class="cursor theme-color add-icon" (click)="removePrice(product,i)">
+      <mat-icon *ngIf="idx != priceForm.controls.pricelist.controls.length - 1" class="cursor theme-color add-icon" (click)="deletePrice(idx)">
         remove</mat-icon>
-        
     </div>
-    <button type="submit" class="mat-raised-button mat-primary save">
-      Save
-    </button>
-  </form>
+  </div>
+  <button type="submit" class="mat-raised-button mat-primary save">
+    Save
+  </button>
+</form> 

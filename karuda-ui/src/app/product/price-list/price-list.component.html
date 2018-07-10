@@ -24,8 +24,8 @@
         <div fxFlex="60%">
           <mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="quantity">
-              <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
-              <mat-cell *matCellDef="let price"> {{price.quantity}} {{price.unitType}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef> Quantity({{product.unitType.type | resolveUnits}}) </mat-header-cell>
+              <mat-cell *matCellDef="let price"> {{price.quantity}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="price">
               <mat-header-cell *matHeaderCellDef> Price(INR) </mat-header-cell>
@@ -44,8 +44,8 @@
           <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
         <div fxFlex="40%">
-          <span *ngIf="!editFlag">Add price</span>
-          <span *ngIf="editFlag">Edit price</span>
+          <span *ngIf="!editFlag" class="form-header">Add price</span>
+          <span *ngIf="editFlag" class="form-header">Edit price</span>
           <form [formGroup]="priceForm" (ngSubmit)="savePrices(product)">
             <div fxLayout="column" fxFlex="50%" fxLayoutGap="3%">
               <mat-form-field>

@@ -23,8 +23,6 @@ public class Price extends UserAudit {
 	@Column
 	private long quantity;
 	
-	private String unitType;
-	
 	@Column
 	private double price;
 	

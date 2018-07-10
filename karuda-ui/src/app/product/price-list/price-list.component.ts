@@ -30,15 +30,6 @@ export class PriceListComponent implements OnInit {
   dataSource = new MatTableDataSource<Price>();
   priceForm: FormGroup;
 
-  unitsLiquid = [
-    { name: 'Milliliter', key: 'ml' },
-    { name: 'Litter', key: 'l' }
-  ];
-  unitsSolid = [
-    { name: 'Gram', key: 'g' },
-    { name: 'Kilogram', key: 'kg' }
-  ];
-
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.commonService.startSpinner();
@@ -48,18 +39,10 @@ export class PriceListComponent implements OnInit {
     this.priceForm = this.fb.group({
       id:[],
       quantity: ['', Validators.required],
-      price: ['', Validators.required],
-      unitType: ['', Validators.required],
+      price: ['', Validators.required]
     });
   }
 
-  getUnitType(type: String) {
-    if (type == "KGS") {
-      return this.unitsSolid;
-    } else if (type == "LTR") {
-      return this.unitsLiquid;
-    }
-  }
   getAllProducts() {
     this.productService.getProducts().subscribe((data) => {
       this.products = data;
@@ -76,8 +59,7 @@ export class PriceListComponent implements OnInit {
     this.priceForm.patchValue({
       id: price.id,
       quantity: price.quantity,
-      price: price.price,
-      unitType: price.unitType
+      price: price.price
     });
   }
 
@@ -94,7 +76,6 @@ export class PriceListComponent implements OnInit {
           if(item.id == this.priceForm.value.id){
             item.price = this.priceForm.value.price;
             item.quantity = this.priceForm.value.quantity;
-            item.unitType = this.priceForm.value.unitType;
           }
         }); 
       } else {
@@ -102,7 +83,6 @@ export class PriceListComponent implements OnInit {
         this.commonService.startSpinner();
         let price = new Price();
         price.quantity = this.priceForm.value['quantity'];
-        price.unitType = this.priceForm.value['unitType'];
         price.price = this.priceForm.value['price'];
         product.price.push(price);
       }

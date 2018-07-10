@@ -5,14 +5,7 @@
     *ngFor="let invoiceparticular of priceForm.controls.pricelist.controls; let idx = index"
       [formGroupName]="idx">
       <mat-form-field>
-        <input matInput placeholder="Quantity" type="number" formControlName="quantity">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select placeholder="Unit type" required formControlName="unitType">
-          <mat-option *ngFor="let unit of getUnitType(product.unitType.type)" [value]="unit.key">
-            {{ unit.name }}
-          </mat-option>
-        </mat-select>
+        <input matInput placeholder="Quantity({{product.unitType.type | resolveUnits}})" type="number" formControlName="quantity">
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Price" type="number" formControlName="price">

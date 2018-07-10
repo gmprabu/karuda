@@ -16,14 +16,6 @@ export class PricePanelComponent implements OnInit {
   @Input() product: Product;
   priceForm: FormGroup;
 
-  unitsLiquid = [
-    { name: 'Milliliter', key: 'ml' },
-    { name: 'Litter', key: 'l' }
-  ];
-  unitsSolid = [
-    { name: 'Gram', key: 'g' },
-    { name: 'Kilogram', key: 'kg' }
-  ];
 
   constructor(private fb: FormBuilder, private productService: ProductService, private commonService: CommonService) { }
   ngOnInit() {
@@ -35,7 +27,6 @@ export class PricePanelComponent implements OnInit {
   initItemRows() {
     return this.fb.group({
       quantity: ['',Validators.required],
-      unitType: ['',Validators.required],
       price: ['',Validators.required],
     });
   }
@@ -50,14 +41,6 @@ export class PricePanelComponent implements OnInit {
     control.removeAt(index);
   }
 
-  getUnitType(type: String) {
-    if (type == "KGS") {
-      return this.unitsSolid;
-    } else if (type == "LTR") {
-      return this.unitsLiquid;
-    }
-  }
-
   savePrices() {
     if (this.priceForm.valid) {
       let prices: Price[] = [];
@@ -65,7 +48,6 @@ export class PricePanelComponent implements OnInit {
      this.priceForm.value.pricelist.forEach((item, index) => {
         let price = new Price();
         price.quantity = item['quantity'];
-        price.unitType = item['unitType'];
         price.price = item['price'];
         prices.push(price);
       }); 

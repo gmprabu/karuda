@@ -37,7 +37,7 @@ export class ProductService {
     return this.http.delete<ApiResponse>('/api/products/price/'+price.id);
   }
 
-  priceUpdate(price: Price): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>('/api/products/price/', price);
+  priceUpdate(product: Product): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>('/api/products/price/', product);
   }
 }

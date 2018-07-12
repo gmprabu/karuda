@@ -40,6 +40,9 @@ export class PricePanelComponent implements OnInit {
     const control = <FormArray>this.priceForm.controls['pricelist'];
     control.removeAt(index);
   }
+  reset(){
+    this.priceForm.reset();
+  }
 
   savePrices() {
     if (this.priceForm.valid) {
@@ -52,9 +55,11 @@ export class PricePanelComponent implements OnInit {
         prices.push(price);
       }); 
       this.product.price = prices;
-       this.productService.updateProduct(this.product).subscribe(data => {
+       this.productService.priceUpdate(this.product).subscribe(data => {
         this.commonService.stopSpinner();
         this.commonService.showSuccessNotification(data.message);
+        console.log(data.responseObject);
+        this.product.price = data.responseObject.price;
       });
     }
   } 

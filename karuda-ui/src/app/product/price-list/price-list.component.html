@@ -10,7 +10,7 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <span *ngIf="product.price.length == 0">
+      <span *ngIf="product.price.length == 0 && !firstTime">
         Price list is not defined.
         <span (click)="definePrice(product)" class="cursor theme-color">
           <strong>Do you want to define now?
@@ -61,11 +61,10 @@
                   </mat-error>
               </mat-form-field>
               <div fxFlex="50%">
+                <button mat-raised-button (click)="reset()"> Reset</button>
                 <button *ngIf="!editFlag" type="submit" class="mat-raised-button mat-primary save">
                   Save
                 </button>
-              </div>
-              <div fxFlex="50%">
                 <button *ngIf="editFlag" type="submit" class="mat-raised-button mat-primary save">
                   Update
                 </button>

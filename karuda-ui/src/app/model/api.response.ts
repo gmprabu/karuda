@@ -1,5 +1,6 @@
 
 export class ApiResponse {
       success:Boolean;
-      message:String
+      message:String;
+      responseObject:any;
 }

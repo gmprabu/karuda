@@ -69,6 +69,10 @@ export class PriceListComponent implements OnInit {
     this.priceForm.reset();
     this.dataSource = new MatTableDataSource<Price>(product.price);
   }
+
+  reset(){
+    this.priceForm.reset();
+  }
   savePrices(product: Product) {
     if (this.priceForm.valid) {
       if (this.editFlag) {
@@ -86,14 +90,15 @@ export class PriceListComponent implements OnInit {
         price.price = this.priceForm.value['price'];
         product.price.push(price);
       }
-      this.productService.updateProduct(product).subscribe(data => {
+      this.productService.priceUpdate(product).subscribe(data => {
         if(this.editFlag){
-          this.commonService.showSuccessNotification("Price updated successfully");
+          this.commonService.showSuccessNotification(data.message);
         }else{
-          this.commonService.showSuccessNotification("Price added successfully");
+          this.commonService.showSuccessNotification(data.message);
         }
-       
-        this.getAllProducts();
+        product = data.responseObject;
+        this.priceForm.value.price='';
+        this.priceForm.value.quantity='';
       });
     }
   }

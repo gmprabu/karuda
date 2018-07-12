@@ -80,11 +80,11 @@ public class ProductController {
 	}
 	
 	@PutMapping("/price")
-	public ResponseEntity<ApiResponse> updatePrice(@RequestBody Price price) {
+	public ResponseEntity<ApiResponse> updatePrice(@RequestBody Product product) {
 		
-		Price result =service.updatePrice(price);
+		Product result =service.updateProduct(product);
 		if (result != null) {
-			return ResponseEntity.ok(new ApiResponse(true, "Price updated successfully"));
+			return ResponseEntity.ok(new ApiResponse(true, "Price updated successfully",result));
 		} 
 		return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Unable to update price..!"),
 				HttpStatus.INTERNAL_SERVER_ERROR);

@@ -9,7 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { StockModelComponent } from './stock-model/stock-model.component';
 import { PriceListComponent } from './price-list/price-list.component';
-import { PricePanelComponent } from './price-panel/price-panel.component';
+import { PriceModalComponent } from './price-modal/price-modal.component';
+
 
 @NgModule({
   imports: [
@@ -26,8 +27,8 @@ import { PricePanelComponent } from './price-panel/price-panel.component';
     ResolveUnits,
     StockModelComponent,
     PriceListComponent,
-    PricePanelComponent
+    PriceModalComponent
   ],
-  entryComponents: [StockModelComponent]
+  entryComponents: [StockModelComponent,PriceModalComponent]
 })
 export class ProductModule { }

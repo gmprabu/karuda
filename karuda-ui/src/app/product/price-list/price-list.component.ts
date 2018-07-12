@@ -7,6 +7,8 @@ import { DialogsService } from '../../shared/dialogs.service';
 import { Product } from '../../model/product';
 import { Price } from '../../model/price';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { PriceModalComponent } from '../price-modal/price-modal.component';
+
 
 @Component({
   selector: 'app-price-list',
@@ -52,7 +54,23 @@ export class PriceListComponent implements OnInit {
   }
 
   definePrice(product: Product) {
-    this.firstTime = true;
+    
+      const dialogRef = this.dialog.open(PriceModalComponent, {
+        width: '550px',
+        data: [product,'test']
+      });
+      dialogRef.afterClosed().subscribe(result => {
+       if(result != undefined && result !== "Cancel"){
+        this.commonService.startSpinner();
+        product.price = result;
+        this.productService.priceUpdate(product).subscribe(data => {
+          this.commonService.showSuccessNotification(data.message);
+          product=data.responseObject;
+          this.commonService.stopSpinner();
+          this.dataSource = new MatTableDataSource<Price>(product.price);
+        });
+       }
+      });
   }
   editPrice(price: Price) {
     this.editFlag = true;

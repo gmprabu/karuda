@@ -1,0 +1,30 @@
+<div>
+  <h2 mat-dialog-title>Define Prices</h2>
+  <hr>
+  <form [formGroup]="priceForm" (ngSubmit)="savePrices()">
+    <mat-dialog-content>
+      <div formArrayName="pricelist">
+        <div fxLayout="row" fxLayoutWrap fxLayoutGap="4%" fxLayoutAlign="left" *ngFor="let invoiceparticular of priceForm.controls.pricelist.controls; let idx = index"
+          [formGroupName]="idx">
+          <div fxFlex>  <mat-form-field>
+            <input matInput placeholder="Quantity({{product.unitType.type | resolveUnits}})" type="number" formControlName="quantity">
+          </mat-form-field></div>
+          <div fxFlex>  <mat-form-field>
+            <input matInput placeholder="Price" type="number" formControlName="price">
+          </mat-form-field></div>
+          <div fxFlex>   <mat-icon *ngIf="idx == priceForm.controls.pricelist.controls.length - 1" class="cursor theme-color add-icon" (click)="addPrice()">
+            add</mat-icon>
+            <mat-icon *ngIf="idx != priceForm.controls.pricelist.controls.length - 1" class="cursor theme-color add-icon" (click)="deletePrice(idx)">
+            remove</mat-icon></div>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <hr>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button (click)="onCloseCancel()"> Cancel</button>
+      <button type="submit" class="mat-raised-button mat-primary save">
+        Save
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

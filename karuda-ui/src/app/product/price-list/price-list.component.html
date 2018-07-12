@@ -17,9 +17,9 @@
           </strong>
         </span>
       </span>
-      <div *ngIf="product.price.length == 0 && firstTime">
+    <!--   <div *ngIf="product.price.length == 0 && firstTime">
         <app-price-panel [product]="product"></app-price-panel>
-      </div>
+      </div> -->
       <div fxLayout="row" fxLayoutWrap fxLayoutGap="5%" fxLayoutAlign="left" *ngIf="product.price.length != 0 && !firstTime">
         <div fxFlex="60%">
           <mat-table [dataSource]="dataSource">

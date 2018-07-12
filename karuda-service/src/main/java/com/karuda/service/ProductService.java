@@ -20,7 +20,7 @@ public interface ProductService {
 
 	Product updateProductStock(StockUpdateRequest product);
 
-	void removePrice(Long id);
+	Product removePrice(Long productId,Long id);
 
 	Price updatePrice(Price price);
 

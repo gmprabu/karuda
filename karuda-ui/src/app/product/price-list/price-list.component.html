@@ -12,16 +12,20 @@
 
       <span *ngIf="product.price.length == 0 && !firstTime">
         Price list is not defined.
-        <span (click)="definePrice(product)" class="cursor theme-color">
+        <span (click)="definePrice(product,null)" class="cursor theme-color">
           <strong>Do you want to define now?
           </strong>
         </span>
       </span>
-    <!--   <div *ngIf="product.price.length == 0 && firstTime">
-        <app-price-panel [product]="product"></app-price-panel>
-      </div> -->
+
+
       <div fxLayout="row" fxLayoutWrap fxLayoutGap="5%" fxLayoutAlign="left" *ngIf="product.price.length != 0 && !firstTime">
-        <div fxFlex="60%">
+        <div fxFlex="70%">
+          <div fxLayout="row" fxLayoutAlign="end" class="add-button">
+            <button (click)="definePrice(product,null)" class="mat-raised-button mat-primary ">
+              Add Price
+            </button>
+          </div>
           <mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="quantity">
               <mat-header-cell *matHeaderCellDef> Quantity({{product.unitType.type | resolveUnits}}) </mat-header-cell>
@@ -34,7 +38,7 @@
             <ng-container matColumnDef="options">
               <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
               <mat-cell *matCellDef="let price">
-                <mat-icon class="cursor theme-color " (click)="editPrice(price)">mode_edit</mat-icon>
+                <mat-icon class="cursor theme-color " (click)="definePrice(product,price)">mode_edit</mat-icon>
                 <mat-icon class="cursor delete theme-color" (click)="deletePrice(price,product)">delete</mat-icon>
               </mat-cell>
             </ng-container>
@@ -42,35 +46,6 @@
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
           <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-        </div>
-        <div fxFlex="40%">
-          <span *ngIf="!editFlag" class="form-header">Add price</span>
-          <span *ngIf="editFlag" class="form-header">Edit price</span>
-          <form [formGroup]="priceForm" (ngSubmit)="savePrices(product)">
-            <div fxLayout="column" fxFlex="50%" fxLayoutGap="3%">
-              <mat-form-field>
-                <input matInput placeholder="Quantity({{product.unitType.type | resolveUnits}})" type="number" formControlName="quantity" required>
-                <mat-error *ngIf="priceForm.get('quantity').hasError('required')">
-                    Quantity is required
-                  </mat-error>
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="Price" type="number" formControlName="price" required>
-                <mat-error *ngIf="priceForm.get('price').hasError('required')">
-                    Price is required
-                  </mat-error>
-              </mat-form-field>
-              <div fxFlex="50%">
-                <button mat-raised-button (click)="reset()"> Reset</button>
-                <button *ngIf="!editFlag" type="submit" class="mat-raised-button mat-primary save">
-                  Save
-                </button>
-                <button *ngIf="editFlag" type="submit" class="mat-raised-button mat-primary save">
-                  Update
-                </button>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </mat-expansion-panel>

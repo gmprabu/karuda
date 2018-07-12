@@ -33,8 +33,8 @@ export class ProductService {
     return this.http.post<ApiResponse>('/api/products/stockUpdate/'+product.id, product);
   }
 
-  priceDelete(price: Price): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>('/api/products/price/'+price.id);
+  priceDelete(productId: number,priceId: number): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>('/api/products/price/'+productId+'/'+priceId);
   }
 
   priceUpdate(product: Product): Observable<ApiResponse> {

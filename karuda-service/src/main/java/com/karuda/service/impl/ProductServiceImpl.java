@@ -2,6 +2,7 @@ package com.karuda.service.impl;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -123,8 +124,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void removePrice(Long id) {
-		priceRepo.deleteById(id);
+	public Product removePrice(Long productId,Long priceId) {
+		priceRepo.deleteById(priceId);
+		Optional<Product> product = repository.findById(productId);
+		return product.get();
 	}
 
 	@Override

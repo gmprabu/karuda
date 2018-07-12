@@ -15,25 +15,40 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class PriceModalComponent implements OnInit {
 
   priceForm: FormGroup;
+  product: Product;
+  price: Price;
 
-
-  constructor(private fb: FormBuilder, 
+  constructor(private fb: FormBuilder,
     private productService: ProductService,
-     private commonService: CommonService,public dialogRef: MatDialogRef<PriceModalComponent>,
-     @Inject(MAT_DIALOG_DATA) public product: Product) { }
+    private commonService: CommonService, public dialogRef: MatDialogRef<PriceModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.priceForm = this.fb.group({
-      pricelist: this.fb.array([this.initItemRows()]) 
+      pricelist: this.fb.array([this.initItemRows()])
     });
-    console.log(this.product);
+    this.product = this.data.product;
+    this.price = this.data.price;
+    this.setValues();
   }
 
   initItemRows() {
     return this.fb.group({
-      quantity: ['',Validators.required],
-      price: ['',Validators.required],
+      id: [],
+      quantity: ['', Validators.required],
+      price: ['', Validators.required],
     });
+   
+  }
+
+  setValues() {
+    if (this.price) {
+      this.priceForm['controls']['pricelist']['controls'][0].patchValue({
+        id: this.price.id,
+        quantity: this.price.quantity,
+        price: this.price.price
+      });
+    } 
   }
 
   addPrice() {
@@ -48,17 +63,48 @@ export class PriceModalComponent implements OnInit {
 
   savePrices() {
     if (this.priceForm.valid) {
-      let prices: Price[] = [];
-     this.priceForm.value.pricelist.forEach((item, index) => {
-        let price = new Price();
-        price.quantity = item['quantity'];
-        price.price = item['price'];
-        prices.push(price);
-      }); 
-      this.dialogRef.close(prices);
+      if (this.product.price.length > 0 && !this.price) {
+        this.addNewPrice();
+      } else if(this.product.price.length > 0 && this.price) {
+        this.editPrice();
+      } else {
+        this.addPriceFirstTime();
+      }
+      this.dialogRef.close(this.product);
     }
-  } 
-  
+  }
+
+  addPriceFirstTime() {
+    let prices: Price[] = [];
+    this.priceForm.value.pricelist.forEach((item, index) => {
+      let price = new Price();
+      price.quantity = item['quantity'];
+      price.price = item['price'];
+      prices.push(price);
+    });
+    this.product.price = prices;
+  }
+
+  addNewPrice() {
+    this.priceForm.value.pricelist.forEach((item, index) => {
+      let price = new Price();
+      price.quantity = item['quantity'];
+      price.price = item['price'];
+      this.product.price.push(price);
+    });
+  }
+
+  editPrice() {
+    this.priceForm.value.pricelist.forEach((item, index) => {
+      this.product.price.forEach((price, index) => {
+        if (price.id == item.id) {
+          price.quantity = item['quantity'];
+          price.price = item['price'];
+        }
+      });
+    });
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }

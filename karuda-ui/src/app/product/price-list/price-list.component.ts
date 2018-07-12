@@ -53,34 +53,26 @@ export class PriceListComponent implements OnInit {
 
   }
 
-  definePrice(product: Product) {
-    
+  definePrice(product: Product,price:Price) {
+    let index = this.products.indexOf(product);
       const dialogRef = this.dialog.open(PriceModalComponent, {
         width: '550px',
-        data: [product,'test']
+        data: {'product':product,
+                'price': price
+              }
       });
       dialogRef.afterClosed().subscribe(result => {
        if(result != undefined && result !== "Cancel"){
         this.commonService.startSpinner();
-        product.price = result;
-        this.productService.priceUpdate(product).subscribe(data => {
+        this.productService.priceUpdate(result).subscribe(data => {
           this.commonService.showSuccessNotification(data.message);
-          product=data.responseObject;
+          this.dataSource = new MatTableDataSource<Price>(data.responseObject);
+          this.products[index].price = data.responseObject;
           this.commonService.stopSpinner();
-          this.dataSource = new MatTableDataSource<Price>(product.price);
         });
        }
       });
   }
-  editPrice(price: Price) {
-    this.editFlag = true;
-    this.priceForm.patchValue({
-      id: price.id,
-      quantity: price.quantity,
-      price: price.price
-    });
-  }
-
   open(product: Product) {
     this.firstTime = false;
     this.editFlag = false;
@@ -88,48 +80,19 @@ export class PriceListComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Price>(product.price);
   }
 
-  reset(){
-    this.priceForm.reset();
-  }
-  savePrices(product: Product) {
-    if (this.priceForm.valid) {
-      if (this.editFlag) {
-        product.price.forEach((item, index) => {
-          if(item.id == this.priceForm.value.id){
-            item.price = this.priceForm.value.price;
-            item.quantity = this.priceForm.value.quantity;
-          }
-        }); 
-      } else {
-        let prices: Price[] = [];
-        this.commonService.startSpinner();
-        let price = new Price();
-        price.quantity = this.priceForm.value['quantity'];
-        price.price = this.priceForm.value['price'];
-        product.price.push(price);
-      }
-      this.productService.priceUpdate(product).subscribe(data => {
-        if(this.editFlag){
-          this.commonService.showSuccessNotification(data.message);
-        }else{
-          this.commonService.showSuccessNotification(data.message);
-        }
-        product = data.responseObject;
-        this.priceForm.value.price='';
-        this.priceForm.value.quantity='';
-      });
-    }
-  }
-
   deletePrice(item: Price, product: Product) {
+    let index = this.products.indexOf(product);
+    console.log(index);
     this.dialogsService
       .confirm('Confirm  delete', 'Are you sure to delete this price?')
       .subscribe((res) => {
         if (res) {
           this.commonService.startSpinner();
-          this.productService.priceDelete(item).subscribe(data => {
+          this.productService.priceDelete(product.id,item.id).subscribe(data => {
             this.commonService.showSuccessNotification(data.message);
-            this.getAllProducts();
+            this.dataSource = new MatTableDataSource<Price>(data.responseObject);
+            this.products[index].price = data.responseObject;
+            this.commonService.stopSpinner();
           });
         }
       });

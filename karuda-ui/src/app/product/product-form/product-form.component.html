@@ -15,6 +15,15 @@
             <mat-error *ngIf="form.get('name').hasError('required')">
               Name is required
             </mat-error>
+            <mat-error *ngIf="form.get('name').hasError('minlength')">
+              Name should be minimum of 3 characters
+            </mat-error>
+            <mat-error *ngIf="form.get('name').hasError('maxlength')">
+              Name should be maximum of 40 characters
+            </mat-error>
+            <mat-error *ngIf="form.get('name').hasError('pattern')">
+              Special characters not allowed
+             </mat-error>
           </mat-form-field>
         </div>
         <div fxFlex>
@@ -23,9 +32,15 @@
             <mat-error *ngIf="form.get('description').hasError('required')">
               Description is required
             </mat-error>
-            <mat-error *ngIf="form.get('description').hasError('maxlength')">
-              Description can be max 200 characters
+            <mat-error *ngIf="form.get('description').hasError('minlength')">
+              Description should be minimum of 5 characters
             </mat-error>
+            <mat-error *ngIf="form.get('description').hasError('maxlength')">
+              Description should be maximum of 40 characters
+            </mat-error>
+            <mat-error *ngIf="form.get('description').hasError('pattern')">
+              Special characters not allowed
+             </mat-error>
           </mat-form-field>
         </div>
         <div fxFlex>
@@ -71,6 +86,9 @@
                   Product image is required
                 </mat-error>
               </mat-form-field>
+              <mat-error *ngIf="fileExtensionError" class="field-error">
+                  Please upload valid image.. 
+              </mat-error>
             </div>
             <div fxFlex>
               <input class="ng-hide" id="input-file-id" type="file" (change)="onFileSelected($event)" />

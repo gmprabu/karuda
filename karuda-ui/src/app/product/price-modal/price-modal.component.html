@@ -7,16 +7,28 @@
       <div formArrayName="pricelist">
         <div fxLayout="row" fxLayoutWrap fxLayoutGap="4%" fxLayoutAlign="left" *ngFor="let invoiceparticular of priceForm.controls.pricelist.controls; let idx = index"
           [formGroupName]="idx">
-          <div fxFlex>  <mat-form-field>
-            <input matInput placeholder="Quantity({{product.unitType.type | resolveUnits}})" type="number" formControlName="quantity">
-          </mat-form-field></div>
-          <div fxFlex>  <mat-form-field>
-            <input matInput placeholder="Price(INR)" type="number" formControlName="price">
-          </mat-form-field></div>
-          <div fxFlex *ngIf="product.price.length == 0">    <mat-icon *ngIf="idx == priceForm.controls.pricelist.controls.length - 1" class="cursor theme-color add-icon" (click)="addPrice()">
-            add</mat-icon>
+          <div fxFlex>
+            <mat-form-field>
+              <input matInput placeholder="Quantity({{product.unitType.type | resolveUnits}})" type="number" formControlName="quantity">
+                <mat-error *ngIf="invoiceparticular.get('quantity').hasError('required')"> 
+                    Quantity is required
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <mat-form-field>
+              <input matInput placeholder="Price(INR)" type="number" formControlName="price">
+              <mat-error *ngIf="invoiceparticular.get('price').hasError('required')"> 
+                  Price is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex *ngIf="product.price.length == 0">
+            <mat-icon *ngIf="idx == priceForm.controls.pricelist.controls.length - 1" class="cursor theme-color add-icon" (click)="addPrice()">
+              add</mat-icon>
             <mat-icon *ngIf="idx != priceForm.controls.pricelist.controls.length - 1" class="cursor theme-color add-icon" (click)="deletePrice(idx)">
-            remove</mat-icon></div>
+              remove</mat-icon>
+          </div>
         </div>
       </div>
     </mat-dialog-content>

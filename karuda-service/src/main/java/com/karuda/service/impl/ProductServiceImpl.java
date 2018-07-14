@@ -72,10 +72,10 @@ public class ProductServiceImpl implements ProductService {
 		repository.deleteById(id);
 	}
 	
-	private void addStockAudit(Product prod,int quantity) {
+	private void addStockAudit(Product prod,long l) {
 		StockAudit audit = new StockAudit();
 		audit.setProductName(prod.getName());
-		audit.setQuantity(quantity);
+		audit.setQuantity(l);
 		auditRepo.save(audit);
 	}
 
@@ -95,11 +95,12 @@ public class ProductServiceImpl implements ProductService {
 			}
 			product.setName(productObj.getString("name"));
 			product.setDescription(productObj.getString("description"));
-			product.setStock(productObj.getInt("stock"));
+			
 			product.setCategory(productObj.getString("category"));
 			UnitType type = unitRepository.findByType(UnitTypeName.valueOf(productObj.getString("unitType")))
 					.orElseThrow(() -> new KarudaException("unit type not set."));
 			product.setUnitType(type);
+			product.setStock(convertUnitToLower(type.getType(),productObj.getLong("stock")));
 			try {
 				product.setImage(file.getBytes());
 			} catch (IOException e) {
@@ -114,13 +115,21 @@ public class ProductServiceImpl implements ProductService {
 		
 		Product product = repository.getOne(request.getId());
 		if(product != null) {
-			int stock = product.getStock();
-			stock = stock + request.getStock();
+			long stock = product.getStock();
+			stock = stock + convertUnitToLower(product.getUnitType().getType(),request.getStock());
 			product.setStock(stock);
 			repository.save(product);
 			addStockAudit(product,request.getStock());
 		}
 		return product;
+	}
+	
+	private long convertUnitToLower(UnitTypeName unitTypeName,long stock) {
+		
+		if(UnitTypeName.KGS.equals(unitTypeName) || UnitTypeName.LTR.equals(unitTypeName))
+		return stock*1000;
+	
+		return 0;
 	}
 
 	@Override

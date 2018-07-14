@@ -10,6 +10,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { StockModelComponent } from './stock-model/stock-model.component';
 import { PriceListComponent } from './price-list/price-list.component';
 import { PriceModalComponent } from './price-modal/price-modal.component';
+import { ResolveUnitsValues } from './pipe/unitValue.pipe';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { PriceModalComponent } from './price-modal/price-modal.component';
     ProductFormComponent,
     ProductListComponent,
     ResolveUnits,
+    ResolveUnitsValues,
     StockModelComponent,
     PriceListComponent,
     PriceModalComponent

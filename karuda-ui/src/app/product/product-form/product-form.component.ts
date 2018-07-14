@@ -14,6 +14,7 @@ import { CommonService } from '../../shared/common.service';
 })
 export class ProductFormComponent implements OnInit {
 
+  fileExtensionError: boolean = false;;
   formSubmitAttempt: boolean = false;
   form: FormGroup;
   description: string;
@@ -38,8 +39,14 @@ export class ProductFormComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       id: [''],
-      name: ['', Validators.required],
-      description: new FormControl('', [Validators.minLength(5), Validators.maxLength(200)]),
+      name: new FormControl('', [Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(40),
+      Validators.pattern('^[a-zA-Z0-9 ]*$')]),
+      description: new FormControl('', [Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(200),
+      Validators.pattern('^[a-zA-Z0-9 ]*$')]),
       category: ['', Validators.required],
       stock: ['',],
       unitType: ['', Validators.required],
@@ -77,8 +84,17 @@ export class ProductFormComponent implements OnInit {
 
   onFileSelected(event) {
     this.selectedFile = event.target.files[0];
+    let fileExtension = event.target.files[0].type;
+    console.log(fileExtension.toLowerCase());
+    console.log(fileExtension.toLowerCase().indexOf('image'));
+    if (fileExtension.toLowerCase().indexOf('image') > -1) {
+      this.fileExtensionError = false;
+    } else {
+      this.fileExtensionError = true;
+    }
     this.form.patchValue({ image: this.selectedFile.name });
   }
+ 
   reset() {
     this.form.reset();
     this.selectedFile = null;

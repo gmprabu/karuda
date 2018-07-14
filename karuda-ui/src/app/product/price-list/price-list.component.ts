@@ -7,6 +7,8 @@ import { DialogsService } from '../../shared/dialogs.service';
 import { Product } from '../../model/product';
 import { Price } from '../../model/price';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { PriceModalComponent } from '../price-modal/price-modal.component';
+
 
 @Component({
   selector: 'app-price-list',
@@ -30,15 +32,6 @@ export class PriceListComponent implements OnInit {
   dataSource = new MatTableDataSource<Price>();
   priceForm: FormGroup;
 
-  unitsLiquid = [
-    { name: 'Milliliter', key: 'ml' },
-    { name: 'Litter', key: 'l' }
-  ];
-  unitsSolid = [
-    { name: 'Gram', key: 'g' },
-    { name: 'Kilogram', key: 'kg' }
-  ];
-
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.commonService.startSpinner();
@@ -48,18 +41,10 @@ export class PriceListComponent implements OnInit {
     this.priceForm = this.fb.group({
       id:[],
       quantity: ['', Validators.required],
-      price: ['', Validators.required],
-      unitType: ['', Validators.required],
+      price: ['', Validators.required]
     });
   }
 
-  getUnitType(type: String) {
-    if (type == "KGS") {
-      return this.unitsSolid;
-    } else if (type == "LTR") {
-      return this.unitsLiquid;
-    }
-  }
   getAllProducts() {
     this.productService.getProducts().subscribe((data) => {
       this.products = data;
@@ -68,65 +53,46 @@ export class PriceListComponent implements OnInit {
 
   }
 
-  definePrice(product: Product) {
-    this.firstTime = true;
+  definePrice(product: Product,price:Price) {
+    let index = this.products.indexOf(product);
+      const dialogRef = this.dialog.open(PriceModalComponent, {
+        width: '550px',
+        data: {'product':product,
+                'price': price
+              }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+       if(result != undefined && result !== "Cancel"){
+        this.commonService.startSpinner();
+        this.productService.priceUpdate(result).subscribe(data => {
+          this.commonService.showSuccessNotification(data.message);
+          this.dataSource = new MatTableDataSource<Price>(data.responseObject);
+          this.products[index].price = data.responseObject;
+          this.commonService.stopSpinner();
+        });
+       }
+      });
   }
-  editPrice(price: Price) {
-    this.editFlag = true;
-    this.priceForm.patchValue({
-      id: price.id,
-      quantity: price.quantity,
-      price: price.price,
-      unitType: price.unitType
-    });
-  }
-
   open(product: Product) {
     this.firstTime = false;
     this.editFlag = false;
     this.priceForm.reset();
     this.dataSource = new MatTableDataSource<Price>(product.price);
   }
-  savePrices(product: Product) {
-    if (this.priceForm.valid) {
-      if (this.editFlag) {
-        product.price.forEach((item, index) => {
-          if(item.id == this.priceForm.value.id){
-            item.price = this.priceForm.value.price;
-            item.quantity = this.priceForm.value.quantity;
-            item.unitType = this.priceForm.value.unitType;
-          }
-        }); 
-      } else {
-        let prices: Price[] = [];
-        this.commonService.startSpinner();
-        let price = new Price();
-        price.quantity = this.priceForm.value['quantity'];
-        price.unitType = this.priceForm.value['unitType'];
-        price.price = this.priceForm.value['price'];
-        product.price.push(price);
-      }
-      this.productService.updateProduct(product).subscribe(data => {
-        if(this.editFlag){
-          this.commonService.showSuccessNotification("Price updated successfully");
-        }else{
-          this.commonService.showSuccessNotification("Price added successfully");
-        }
-       
-        this.getAllProducts();
-      });
-    }
-  }
 
   deletePrice(item: Price, product: Product) {
+    let index = this.products.indexOf(product);
+    console.log(index);
     this.dialogsService
       .confirm('Confirm  delete', 'Are you sure to delete this price?')
       .subscribe((res) => {
         if (res) {
           this.commonService.startSpinner();
-          this.productService.priceDelete(item).subscribe(data => {
+          this.productService.priceDelete(product.id,item.id).subscribe(data => {
             this.commonService.showSuccessNotification(data.message);
-            this.getAllProducts();
+            this.dataSource = new MatTableDataSource<Price>(data.responseObject);
+            this.products[index].price = data.responseObject;
+            this.commonService.stopSpinner();
           });
         }
       });

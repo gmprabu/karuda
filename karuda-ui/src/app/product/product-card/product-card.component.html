@@ -4,13 +4,12 @@
     <mat-card-title>{{product.name}}</mat-card-title>
     <mat-card-subtitle>{{product.category}}</mat-card-subtitle>
   </mat-card-header>
-  <!-- <img mat-card-image src="assets/img/soap.jpg"> -->
   <mat-card-content class="content">
     <p>
       {{product.description}}
     </p>
     <p>
-      <strong>Current Stock:</strong> {{product.stock}}  {{ product.unitType.type | resolveUnits}}
+      <strong>Current Stock:</strong> {{product.stock | resolveUnitValue:product.unitType.type}}  {{ product.unitType.type | resolveUnits}}
     </p>
   </mat-card-content>
   <mat-card-actions align="end">

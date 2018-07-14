@@ -20,7 +20,7 @@ public class StockAudit  extends UserAudit {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private int quantity;
+	private long quantity;
 	
 	private String productName;
 }

@@ -4,7 +4,7 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-dialog-content>
 
-      <strong>Stock available:</strong> {{product.stock}} {{ product.unitType.type | resolveUnits}}
+      <strong>Stock available:</strong> {{product.stock | resolveUnitValue:product.unitType.type}} {{ product.unitType.type | resolveUnits}}
       <br>
       <br>
       <div fxLayout="row" fxLayoutGap="5%">

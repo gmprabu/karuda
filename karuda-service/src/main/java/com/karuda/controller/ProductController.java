@@ -73,18 +73,18 @@ public class ProductController {
 				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@DeleteMapping("/price/{id}")
-	public ResponseEntity<ApiResponse> deletePrice(@PathVariable Long id) {
-		 service.removePrice(id);
-		 return ResponseEntity.ok(new ApiResponse(true, "Price deleted successfully"));
+	@DeleteMapping("/price/{productId}/{id}")
+	public ResponseEntity<ApiResponse> deletePrice(@PathVariable Long productId,@PathVariable Long id) {
+		Product product =service.removePrice(productId,id);
+		 return ResponseEntity.ok(new ApiResponse(true, "Price deleted successfully",product.getPrice()));
 	}
 	
 	@PutMapping("/price")
-	public ResponseEntity<ApiResponse> updatePrice(@RequestBody Price price) {
+	public ResponseEntity<ApiResponse> updatePrice(@RequestBody Product product) {
 		
-		Price result =service.updatePrice(price);
+		Product result =service.updateProduct(product);
 		if (result != null) {
-			return ResponseEntity.ok(new ApiResponse(true, "Price updated successfully"));
+			return ResponseEntity.ok(new ApiResponse(true, "Price updated successfully",result.getPrice()));
 		} 
 		return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Unable to update price..!"),
 				HttpStatus.INTERNAL_SERVER_ERROR);

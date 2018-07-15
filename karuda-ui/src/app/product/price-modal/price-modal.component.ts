@@ -18,6 +18,15 @@ export class PriceModalComponent implements OnInit {
   product: Product;
   price: Price;
 
+  unitsLiquid = [
+        { name: 'Milliliter', key: 'ml' },
+        { name: 'Litter', key: 'l' }
+      ];
+      unitsSolid = [
+        { name: 'Gram', key: 'g' },
+        { name: 'Kilogram', key: 'kg' }
+      ];
+
   constructor(private fb: FormBuilder,
     private productService: ProductService,
     private commonService: CommonService, public dialogRef: MatDialogRef<PriceModalComponent>,
@@ -32,10 +41,19 @@ export class PriceModalComponent implements OnInit {
     this.setValues();
   }
 
+  getUnitType(type: String) {
+        if (type == "KGS") {
+          return this.unitsSolid;
+        } else if (type == "LTR") {
+          return this.unitsLiquid;
+        }
+      }
+
   initItemRows() {
     return this.fb.group({
       id: [],
       quantity: ['', Validators.required],
+      unitType: ['', Validators.required],
       price: ['', Validators.required],
     });
    
@@ -46,6 +64,7 @@ export class PriceModalComponent implements OnInit {
       this.priceForm['controls']['pricelist']['controls'][0].patchValue({
         id: this.price.id,
         quantity: this.price.quantity,
+        unitType: this.price.unitType,
         price: this.price.price
       });
     } 
@@ -74,23 +93,29 @@ export class PriceModalComponent implements OnInit {
     }
   }
 
+  onPriceChange(){
+    console.log('test');
+  }
+
+  createPriceObject(item:any):Price{
+    let price = new Price();
+    price.quantity = item['quantity'];
+    price.unitType = item['unitType'];
+    price.price = item['price'];
+    return price;
+  }
+
   addPriceFirstTime() {
     let prices: Price[] = [];
     this.priceForm.value.pricelist.forEach((item, index) => {
-      let price = new Price();
-      price.quantity = item['quantity'];
-      price.price = item['price'];
-      prices.push(price);
+      prices.push(this.createPriceObject(item));
     });
     this.product.price = prices;
   }
 
   addNewPrice() {
     this.priceForm.value.pricelist.forEach((item, index) => {
-      let price = new Price();
-      price.quantity = item['quantity'];
-      price.price = item['price'];
-      this.product.price.push(price);
+      this.product.price.push(this.createPriceObject(item));
     });
   }
 
@@ -99,6 +124,7 @@ export class PriceModalComponent implements OnInit {
       this.product.price.forEach((price, index) => {
         if (price.id == item.id) {
           price.quantity = item['quantity'];
+          price.unitType = item['unitType'];
           price.price = item['price'];
         }
       });

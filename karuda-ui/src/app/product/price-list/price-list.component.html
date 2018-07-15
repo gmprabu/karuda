@@ -28,8 +28,8 @@
           </div>
           <mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="quantity">
-              <mat-header-cell *matHeaderCellDef> Quantity({{product.unitType.type | resolveUnits}}) </mat-header-cell>
-              <mat-cell *matCellDef="let price"> {{price.quantity}} </mat-cell>
+              <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+              <mat-cell *matCellDef="let price"> {{price.quantity}} {{price.unitType}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="price">
               <mat-header-cell *matHeaderCellDef> Price(INR) </mat-header-cell>

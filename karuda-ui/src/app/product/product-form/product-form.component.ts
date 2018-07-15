@@ -85,8 +85,7 @@ export class ProductFormComponent implements OnInit {
   onFileSelected(event) {
     this.selectedFile = event.target.files[0];
     let fileExtension = event.target.files[0].type;
-    console.log(fileExtension.toLowerCase());
-    console.log(fileExtension.toLowerCase().indexOf('image'));
+
     if (fileExtension.toLowerCase().indexOf('image') > -1) {
       this.fileExtensionError = false;
     } else {
@@ -101,7 +100,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.valid) {
+    if (this.form.valid && !this.fileExtensionError) {
       this.commonService.startSpinner();
       if (this.editFlag) {
         this.updateProduct();

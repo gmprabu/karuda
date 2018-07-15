@@ -56,7 +56,7 @@ export class PriceListComponent implements OnInit {
   definePrice(product: Product,price:Price) {
     let index = this.products.indexOf(product);
       const dialogRef = this.dialog.open(PriceModalComponent, {
-        width: '550px',
+        width: '700px',
         data: {'product':product,
                 'price': price
               }

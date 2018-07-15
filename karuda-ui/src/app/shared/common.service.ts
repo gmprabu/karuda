@@ -10,7 +10,6 @@ export class CommonService {
 
     private user: User;
     overlay:boolean = false;
-    loggedIn:boolean = this.auth.isLoggedIn();
     private product: Product;
     options: GlobalConfig;
 

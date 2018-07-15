@@ -9,17 +9,31 @@
           [formGroupName]="idx">
           <div fxFlex>
             <mat-form-field>
-              <input matInput placeholder="Quantity({{product.unitType.type | resolveUnits}})" type="number" formControlName="quantity">
-                <mat-error *ngIf="invoiceparticular.get('quantity').hasError('required')"> 
-                    Quantity is required
+              <input matInput placeholder="Quantity({{product.unitType.type | resolveUnits}})" 
+                        (change)="onPriceChange()" type="number" formControlName="quantity">
+              <mat-error *ngIf="invoiceparticular.get('quantity').hasError('required')">
+                Quantity is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex>
+            <mat-form-field>
+              <mat-select placeholder="Unit type"  formControlName="unitType" required 
+                                              (selectionChange)="onPriceChange()">
+                <mat-option *ngFor="let unit of getUnitType(product.unitType.type)" [value]="unit.key">
+                  {{ unit.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="invoiceparticular.get('unitType').hasError('required')">
+                  Unit type is required
                 </mat-error>
             </mat-form-field>
           </div>
           <div fxFlex>
             <mat-form-field>
               <input matInput placeholder="Price(INR)" type="number" formControlName="price">
-              <mat-error *ngIf="invoiceparticular.get('price').hasError('required')"> 
-                  Price is required
+              <mat-error *ngIf="invoiceparticular.get('price').hasError('required')">
+                Price is required
               </mat-error>
             </mat-form-field>
           </div>

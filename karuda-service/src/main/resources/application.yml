@@ -34,4 +34,4 @@ spring:
     show-sql: false
     generate-ddl: false
     hibernate: 
-      ddl-auto: update
+      ddl-auto: create-drop

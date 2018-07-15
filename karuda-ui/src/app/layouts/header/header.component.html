@@ -1,6 +1,6 @@
 <mat-toolbar class="tool-bar" color="primary">
   <button id="menu-button" mat-icon-button (click)="openSidebar()" >
-    <mat-icon>
+    <mat-icon *ngIf="loggedIn()">
       menu
     </mat-icon>
   </button>

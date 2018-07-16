@@ -1,15 +1,16 @@
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 import { User } from "../model/user";
 import { Product } from "../model/product";
 import { ToastrService, GlobalConfig } from "ngx-toastr";
 import { AuthService } from "../auth/auth.service";
 
 
+
 @Injectable()
 export class CommonService {
 
     private user: User;
-    overlay:boolean = false;
+    overlay:EventEmitter<Boolean>;
     private product: Product;
     options: GlobalConfig;
 
@@ -18,6 +19,8 @@ export class CommonService {
         this.options.closeButton = true;
         this.options.positionClass = 'toast-top-full-width';
         this.options.timeOut = 5000;
+        this.overlay = new EventEmitter();
+
     }
 
     
@@ -46,10 +49,10 @@ export class CommonService {
     }
 
     public startSpinner() {
-        this.overlay = true;
+        this.overlay.emit(true)
     }
 
     public stopSpinner() {
-        this.overlay = false;
+        this.overlay.emit(false)
     }
 }

@@ -23,12 +23,12 @@ export class ProductListComponent implements OnInit {
   products:Product[];
    
   ngOnInit() {
-    this.commonService.startSpinner();
     this. getAllProducts();
     this.commonService.setProduct(null);
   }
 
   getAllProducts() {
+    this.commonService.startSpinner();
     this.productService.getProducts().subscribe((data) => {
       this.products = data;
       this.commonService.stopSpinner();

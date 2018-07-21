@@ -19,6 +19,7 @@ import { AuthInterceptor } from './auth/auth.intercept';
 import { ProductModule } from './product/product.module';
 import { UserMangementModule } from './user/user.module';
 import { ToastrModule } from 'ngx-toastr';
+import { ProductImage } from './pipe/product.image';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
     DashboardComponent,
     LoginComponent,
     ConfirmDialogComponent,
+    ProductImage
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,7 @@
           [formGroupName]="idx">
           <div fxFlex>
             <mat-form-field>
-              <input matInput placeholder="Quantity({{product.unitType.type | resolveUnits}})" 
+              <input matInput placeholder="Quantity" 
                         (change)="onPriceChange()" type="number" formControlName="quantity">
               <mat-error *ngIf="invoiceparticular.get('quantity').hasError('required')">
                 Quantity is required

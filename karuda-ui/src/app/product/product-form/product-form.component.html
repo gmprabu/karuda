@@ -11,7 +11,7 @@
         </mat-card-header>
         <div fxFlex>
           <mat-form-field>
-            <input matInput placeholder="Name" formControlName="name" required>
+            <input matInput placeholder="Name" (change)="productNameChange()" formControlName="name" required>
             <mat-error *ngIf="form.get('name').hasError('required')">
               Name is required
             </mat-error>
@@ -25,6 +25,9 @@
               Special characters not allowed
              </mat-error>
           </mat-form-field>
+          <mat-error *ngIf="productNameExists" class="field-error">
+              Product already exists.
+            </mat-error>
         </div>
         <div fxFlex>
           <mat-form-field>

@@ -14,7 +14,8 @@ import { CommonService } from '../../shared/common.service';
 })
 export class ProductFormComponent implements OnInit {
 
-  fileExtensionError: boolean = false;;
+  productNameExists: boolean = false;
+  fileExtensionError: boolean = false;
   formSubmitAttempt: boolean = false;
   form: FormGroup;
   description: string;
@@ -73,7 +74,19 @@ export class ProductFormComponent implements OnInit {
       this.form.get("image").setValidators(Validators.required);
     }
   }
-
+  productNameChange(){
+    let name = this.form.value.name;
+    if(name && name.length > 3 ){
+     this.productService.checkProductnameDuplicate(name).subscribe(data => {
+       console.log(data);
+       if(data){
+         this.productNameExists = true;
+       }else{
+         this.productNameExists = false;
+       }
+     });
+    }
+   }
 
   isFieldInvalid(field: string) {
     return (
@@ -100,7 +113,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.valid && !this.fileExtensionError) {
+    if (this.form.valid && !this.fileExtensionError && !this.productNameExists) {
       this.commonService.startSpinner();
       if (this.editFlag) {
         this.updateProduct();

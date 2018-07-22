@@ -2,12 +2,10 @@
   <mat-accordion>
     <mat-expansion-panel *ngFor="let product of products; index as productIndex;" (opened)="open(product)">
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          <strong>{{product.name}}</strong>
+        <mat-panel-title >
+          <strong class="name">{{product.name}}</strong>
+          <span class="description">{{product.category}}</span>
         </mat-panel-title>
-        <mat-panel-description>
-          {{product.category}}
-        </mat-panel-description>
       </mat-expansion-panel-header>
 
       <span *ngIf="product.price.length == 0 && !firstTime">

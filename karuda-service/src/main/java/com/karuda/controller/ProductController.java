@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.karuda.domain.Price;
 import com.karuda.domain.Product;
 import com.karuda.model.ApiResponse;
 import com.karuda.model.StockUpdateRequest;
@@ -32,6 +31,11 @@ public class ProductController {
 	@GetMapping
 	public List<Product> getAllProducts(){
 		return service.getProducts();
+	}
+	
+	@GetMapping("/{name}")
+	public boolean checkUserNameExists(@PathVariable String name) {
+		return service.checkDuplicateProductName(name);
 	}
 	
 	@PostMapping

@@ -7,3 +7,13 @@ table {
   .add-button{
     margin-bottom: 10px;
   }
+  .name{
+    width: 16%;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+}
+.description{
+  margin-left: 10%; 
+}

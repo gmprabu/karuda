@@ -1,6 +1,69 @@
-<div class="page-top-margin">
+<!-- <div class="page-top-margin">
     <h2>Dashboard </h2>
    <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+</div> -->
+
+<div fxLayout="row" class="dashboard page-top-margin" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="left">
+    <div fxFlex="30%">
+        <mat-card class="panel">
+           <!--  <mat-card-header>
+                <mat-card-title>
+                </mat-card-title>
+            </mat-card-header> -->
+            <mat-card-content>
+                <mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="index">
+                        <mat-header-cell *matHeaderCellDef>S.No </mat-header-cell>
+                        <mat-cell *matCellDef="let element; let i = index;">{{i}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                            <mat-cell *matCellDef="let price"> {{price.quantity}} {{price.unitType}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="quantity">
+                        <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+                        <mat-cell *matCellDef="let price"> {{price.quantity}} {{price.unitType}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="price">
+                        <mat-header-cell *matHeaderCellDef> Price</mat-header-cell>
+                        <mat-cell *matCellDef="let price"> {{price.price}} </mat-cell>
+                    </ng-container>
+                 <!--    <ng-container matColumnDef="options">
+                        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let price">
+                            <mat-icon class="cursor delete theme-color" (click)="deletePrice(price,product)">delete</mat-icon>
+                        </mat-cell>
+                    </ng-container> -->
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+               <!--  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div fxFlex="70%">
+        <mat-card class="panel">
+            <mat-card-header>
+                <mat-card-title>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div fxLayout="row wrap" fxLayout.lt-md="column wrap" fxLayoutGap="2%">
+                    <div fxFlex="18%" *ngFor="let product of products" class="card-item">
+                        <div mat-card-avatar class="img-circle">
+                            <img src="{{product.image | imageResolve}}">
+                        </div>
+                        <div class="name" matTooltip="{{product.name}}" matTooltipPosition="above">
+                            {{product.name}}
+                        </div>
+                       <!--  <div>
+                            <span class="add cursor">Add</span>
+                        </div> -->
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>
-
-

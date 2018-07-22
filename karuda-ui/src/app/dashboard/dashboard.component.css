@@ -1,0 +1,60 @@
+
+.dashboard{
+ margin-left: 5px !important; 
+ margin-right: 5px !important;
+ height: 74%;
+}
+
+.panel{
+    height: 100%;
+    padding: 10px;
+}
+
+mat-card img{
+    background-size: cover; 
+    width: 100%; 
+    height: 100%;
+    border-radius: 50%;
+  }
+.name{
+    padding-left: 10%;
+    padding-top: 10px;
+    width: 60%; 
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+}
+.mat-card-avatar{
+      height: 80px;
+      width: 100px;
+}
+
+.add {
+    background-color: #f44336;
+    color: white;
+    padding: 1px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 15%;
+}   
+
+.add:hover, .add:active {
+    background-color: red;
+}
+
+.mat-table {
+      border: 1px solid #E6E6E5;
+      margin-left: 0px !important;
+  }
+  mat-header-cell:first-child {
+    padding-left: 10px;
+}
+mat-header-cell:last-child {
+    padding-right: 10px;
+}
+.card-item{
+    margin-bottom: 4%;
+}
+

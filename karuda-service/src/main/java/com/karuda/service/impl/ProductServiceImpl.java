@@ -143,4 +143,9 @@ public class ProductServiceImpl implements ProductService {
 	public Price updatePrice(Price price) {
 		return priceRepo.save(price);
 	}
+
+	@Override
+	public boolean checkDuplicateProductName(String name) {
+		return repository.findByName(name).isPresent();
+	}
 }

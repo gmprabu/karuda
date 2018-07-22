@@ -8,6 +8,10 @@ import { Price } from '../../model/price';
 @Injectable()
 export class ProductService {
 
+  checkProductnameDuplicate(name: String):  Observable<any> {
+    return this.http.get('/api/products/' + name);
+  }
+  
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {

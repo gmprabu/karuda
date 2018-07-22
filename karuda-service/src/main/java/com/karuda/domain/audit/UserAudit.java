@@ -24,10 +24,10 @@ public abstract class UserAudit  {
 
 	@CreatedBy
 	@Column(updatable = false)
-	private Long createdBy;
+	private String createdBy;
 
 	@LastModifiedBy
-	private Long updatedBy;
+	private String updatedBy;
 	
 	@CreatedDate
 	@Column(nullable = false, updatable = false)

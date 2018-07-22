@@ -24,4 +24,6 @@ public interface ProductService {
 
 	Price updatePrice(Price price);
 
+	boolean checkDuplicateProductName(String name);
+
 }

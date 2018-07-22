@@ -32,7 +32,7 @@ public class SampleDataInsert implements CommandLineRunner {
     @Override
     public void run(String...args) throws Exception {
     	
-    	
+   /* 	
     	Set<Role> roles = new HashSet<Role>();  
     	Role role = new Role();
     	role.setName(RoleName.ADMIN);
@@ -58,6 +58,6 @@ public class SampleDataInsert implements CommandLineRunner {
     	unit.save(type);
     	type = new UnitType();
     	type.setType(UnitTypeName.LTR);
-    	unit.save(type);
+    	unit.save(type);*/
     }
 }
